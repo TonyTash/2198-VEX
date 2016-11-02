@@ -32,8 +32,8 @@ task main()
 		}
 		else                      		//Else (neither button is pressed)...
 		{
-			motor[lArm] = 0;     			 	//...stop the arm.
-			motor[rArm] = 0;     			 	//...stop the arm.
+			motor[lArm] = 0;     			 	//stop the arm.
+			motor[rArm] = 0;     			 	//stop the arm.
 		}
 
 
@@ -47,4 +47,5 @@ v1.0.1		2016-11-01		Reversed right motors
 v2.0.0		2016-11-02		Started arm motor program
 v2.0.1		2016-11-02		Added pragma config for arms
 v2.1.0		2016-11-02		Added code for arm to go up based on buttons
+
 */
