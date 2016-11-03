@@ -1,3 +1,7 @@
+#pragma config(Sensor, in1,    lArmPot,        sensorPotentiometer)
+#pragma config(Sensor, in2,    rArmPot,        sensorPotentiometer)
+#pragma config(Sensor, in3,    lPivotPot,      sensorPotentiometer)
+#pragma config(Sensor, in4,    rPivotPot,      sensorPotentiometer)
 #pragma config(Motor,  port2,           rFrontMotor,   tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           rBackMotor,    tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port4,           lFrontMotor,   tmotorVex393, openLoop)
@@ -47,5 +51,6 @@ v1.0.1		2016-11-01		Reversed right motors
 v2.0.0		2016-11-02		Started arm motor program
 v2.0.1		2016-11-02		Added pragma config for arms
 v2.1.0		2016-11-02		Added code for arm to go up based on buttons
+v2.1.1		2016-11-03		Added potentiometers into pragma config
 
 */
