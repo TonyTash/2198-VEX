@@ -24,9 +24,9 @@ int threshold1 = 40;
 int threshold2 = 30;
 
 	int lArm = (SensorValue[leftArmSensor] - 7);
-   	int rArm = (4095 - SensorValue[rightArmSensor]);
+  int rArm = (4095 - SensorValue[rightArmSensor]);
 
-   	int motorspeed = abs(larm - rarm);
+  int motorspeed = abs(larm - rarm);
 
   while(1 == 1) // Loop following indefinetly
   {
@@ -92,12 +92,12 @@ int threshold2 = 30;
    		if(vexRT[Btn6U] == 1)
    		{
    			motor[rightArmMotor] = 127;
-   			motor[leftArmMotor] = (127 - motorspeed);
+   			motor[leftArmMotor] = (127 - motorspeed*2);
    		}
    		else if(vexRT[Btn6D] == 1)
    		{
    			motor[rightArmMotor] = -127;
-   			motor[leftArmMotor] = (-127 + motorspeed);
+   			motor[leftArmMotor] = (-127 + motorspeed*2);
    		}
    		else
    		{
@@ -109,12 +109,12 @@ int threshold2 = 30;
     {
     	if(vexRT[Btn6U] == 1)
    		{
-   			motor[rightArmMotor] = (127 - motorspeed);
+   			motor[rightArmMotor] = (127 - motorspeed*2);
    			motor[leftArmMotor] = 127;
    		}
    		else if(vexRT[Btn6D] == 1)
    		{
-   			motor[rightArmMotor] = (-127 + motorspeed);
+   			motor[rightArmMotor] = (-127 + motorspeed*2);
    			motor[leftArmMotor] = -127;
    		}
    		else
