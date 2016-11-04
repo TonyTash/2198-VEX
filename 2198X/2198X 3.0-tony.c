@@ -23,8 +23,8 @@ int forbackward = 0;
 int threshold1 = 40;
 int threshold2 = 30;
 
-	int larm = (SensorValue[leftArmSensor] - 250);
-   	int rarm = (SensorValue[rightArmSensor] - 125);
+	int lArm = (SensorValue[leftArmSensor] - 7);
+   	int rArm = (4095 - SensorValue[rightArmSensor]);
 
    	int motorspeed = abs(larm - rarm);
 
@@ -66,7 +66,7 @@ int threshold2 = 30;
 
 
     //six bar control.
-    if(SensorValue[leftArmSensor] == SensorValue[rightArmSensor])
+    if(lArm == rArm)
     {
    		if(vexRT[Btn6U] == 1)
    		{
@@ -87,7 +87,7 @@ int threshold2 = 30;
 
 
 
-   	else if(SensorValue[leftArmSensor] > SensorValue[rightArmSensor])
+   	else if(lArm > rArm)
    	{
    		if(vexRT[Btn6U] == 1)
    		{
@@ -105,7 +105,7 @@ int threshold2 = 30;
    			motor[leftArmMotor] = 0;
    	  }
     }
-    else if(SensorValue[leftArmMotor] < SensorValue[rightArmSensor])
+    else if(lArm < rArm)
     {
     	if(vexRT[Btn6U] == 1)
    		{
