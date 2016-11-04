@@ -80,7 +80,11 @@ int threshold2 = 30;
    		}
    	}
 
-   	int larm = SensorValue[leftArmSeleftArmSensor]
+   	int larm = (SensorValue[leftArmSensor] - 250)
+   	int rarm = sensor - 125
+
+   	int mototspeed = abs(larm - rarm)
+
    	else if(SensorValue[leftArmSensor] > SensorValue[rightArmSensor])
    	{
    		if(vexRT[Btn6U] == 1)
