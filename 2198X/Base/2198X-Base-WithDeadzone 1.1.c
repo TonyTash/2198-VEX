@@ -20,7 +20,7 @@ int threshold = 40;
 
   	if(abs(vexRT[Ch4]) > threshold)
   	{
-  		side = vexRT[Ch4];
+  		side = 127;
   	}
   	else
   	{
@@ -35,6 +35,8 @@ int threshold = 40;
     motor[backLeftMotor]  = (vexRT[Ch3] + vexRT[Ch1]);
 
     motor[sidewaysMotor] = side; // Allows the robot to move sideways, based on the
+
+    //changelog change the side motor. now once it passes the threshold, motor run on full power.
 
 
 	}
