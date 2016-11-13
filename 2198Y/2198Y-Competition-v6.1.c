@@ -18,6 +18,8 @@
 
 	int lOffset = 220;
 	int rOffset = 0;
+	int lPOffset = 336;
+	int rPOffset = 340;
 	int pivotHold = 0;
 
 #pragma platform(VEX)
@@ -45,30 +47,6 @@ void pre_auton()
 
 //////////////////////////// AUTONOMOUS ////////////////////////////////////////////
 
-task rest ()
-{
-	motor[rFrontMotor] = 0;
-	motor[rBackMotor] = 0;
-	motor[lFrontMotor] = 0;
-	motor[lBackMotor] = 0;
-}
-
-task forward ()
-{
-	motor[rFrontMotor] = 127;
-	motor[rBackMotor] = 127;
-	motor[lFrontMotor] = 127;
-	motor[lBackMotor] = 127;
-}
-
-task backward ()
-{
-	motor[rFrontMotor] = -127;
-	motor[rBackMotor] = -127;
-	motor[lFrontMotor] = -127;
-	motor[lBackMotor] = -127;
-}
-
 task autonomous()
 {
 
@@ -82,10 +60,12 @@ task autonomous()
 	6. Throw stars down
 	7. Move sideways
 	*/
+	int lPOffset = 336;
+	int rPOffset = 340;
 
 	ClearTimer(T1);
 
-	while (time1[T1] < 370)
+	while (time1[T1] < 375)
 	{
 	motor[rFrontMotor] = 127;
 	motor[rBackMotor] = 127;
@@ -96,6 +76,19 @@ task autonomous()
 	motor[rBackMotor] = 0;
 	motor[lFrontMotor] = 0;
 	motor[lBackMotor] = 0;
+
+	int lPivotSensor = (4096 - (SensorValue[lPivotPot] - lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
+
+	while ((((rPivotSensor + lPivotSensor)/2)) > 100)
+	{
+		motor[lPivot] = -127;
+		motor[rPivot] = -127;
+		int lPivotSensor = (4096 - (SensorValue[lPivotPot] - lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  	int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
+	}
+	motor[rPivot] = 0;
+	motor[lPivot] = 0;
 
 }
 
@@ -111,6 +104,8 @@ task usercontrol()
 	  // Assign sensor inputs to variables
 		int lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
   	int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+		int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  	int rPivotSensor = (SensorValue[rPivotPot] + rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
    	int motorspeed = sqrt( (lArm - rArm)*(lArm - rArm) ); // Create variable to change motor speed based on how different the readings are
 
@@ -194,12 +189,8 @@ task usercontrol()
 
     // Pivot System
 
-    if (pivotHold == 1)
-    {
-    motor[lPivot] = 25;
-  	motor[rPivot] = 25;
-  	}
-  	else if (vexRT[Btn5U] == 1)
+
+  	if (vexRT[Btn5U] == 1)
   	{
   	motor[lPivot] = 127;
   	motor[rPivot] = 127;
@@ -211,10 +202,16 @@ task usercontrol()
 		motor[lPivot] = -127;
 		}
 
+		else if (pivotHold == 0)
+    {
+    motor[lPivot] = 0;
+  	motor[rPivot] = 0;
+  	}
+
 		else
 		{
-		motor[lPivot] = 0;
-		motor[rPivot] = 0;
+		motor[lPivot] = 30;
+		motor[rPivot] = 30;
 		}
 	}
 }
@@ -236,5 +233,6 @@ v5.0.0		2016-11-07		Working potentiometer code
 v5.1.0		2016-11-08		changed ports for base
 v5.2.0		2016-11-08		Pivot (without potentiometers) added
 v6.0.0		2016-11-13		Switched code to competition template
+v6.1.x		2016-11-13		Autonomous timings calculated
 
 */
