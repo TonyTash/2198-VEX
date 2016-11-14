@@ -63,6 +63,7 @@ task autonomous()
 	int lPOffset = 0;
 	int rPOffset = 0;
 
+	// rotate
 	ClearTimer(T1);
 
 	while (time1[T1] < 375)
@@ -77,6 +78,8 @@ task autonomous()
 	motor[lFrontMotor] = 0;
 	motor[lBackMotor] = 0;
 
+
+	// turn shovel down
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
   int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
@@ -91,6 +94,7 @@ task autonomous()
 	motor[lPivot] = 0;
 
 		ClearTimer(T1);
+	// move forward, pick up star
 
 	while (time1[T1] < 1000)
 	{
@@ -104,18 +108,55 @@ task autonomous()
 	motor[lFrontMotor] = 0;
 	motor[lBackMotor] = 0;
 
+	// initialize arm
+
 	int lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
   int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+
+  // raise arm
+
   while (lArm < 1500)
 	{
 	motor[lArmMotor] = -127;
 	motor[rArmMotor] = -127;
+	lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 	}
 	motor[lArmMotor] = 0;
 	motor[rArmMotor] = 0;
-	int lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
-  int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+
+	// turn and goto fence
+
+	ClearTimer(T1);
+
+		while (time1[T1] < 375)
+	{
+	motor[rFrontMotor] = -127;
+	motor[rBackMotor] = -127;
+	motor[lFrontMotor] = 127;
+	motor[lBackMotor] = 127;
+	}
+	motor[rFrontMotor] = 0;
+	motor[rBackMotor] = 0;
+	motor[lFrontMotor] = 0;
+	motor[lBackMotor] = 0;
+
+
+	ClearTimer(T1);
+
+		while (time1[T1] < 10000)
+	{
+	motor[rFrontMotor] = 127;
+	motor[rBackMotor] = 127;
+	motor[lFrontMotor] = 127;
+	motor[lBackMotor] = 127;
+	}
+	motor[rFrontMotor] = 0;
+	motor[rBackMotor] = 0;
+	motor[lFrontMotor] = 0;
+	motor[lBackMotor] = 0;
 }
+
 
 /////////////////////////// USER CONTROL ///////////////////////////////////////////
 
