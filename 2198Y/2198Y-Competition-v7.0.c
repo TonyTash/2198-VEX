@@ -21,6 +21,11 @@
 	int lPOffset = 0;
 	int rPOffset = 0;
 	int pivotHold = 0;
+	int armMode = 0;
+	// 0 = user
+	// 1 = arm down
+	// 2 = arm half up
+	// 3 = scoring position
 
 #pragma platform(VEX)
 
@@ -196,6 +201,50 @@ task usercontrol()
   //	motor[lArmMotor] = 127;
   //}
 
+
+
+
+
+if (vexRT[Btn8U] == 1)
+  {
+  	armMode = 1;
+}
+
+else if (vexRT[Btn6U] == 1)
+  {
+  	armMode = 0;
+}
+
+else if (vexRT[Btn6D] == 1)
+  {
+  	armMode = 0;
+}
+
+
+  	while ((rArm > 50) && (armMode == 1))
+		{
+			if (lArm == rArm)
+			{
+			motor[rArmMotor] = 127;
+			motor[lArmMotor] = 127;
+		}
+
+		else if (lArm > rArm)
+			{
+			motor[rArmMotor] = (127 - motorspeed);
+			motor[lArmMotor] = 127;
+		}
+
+		else if (lArm < rArm)
+			{
+			motor[rArmMotor] = 127;
+			motor[lArmMotor] = (127 - motorspeed);
+		}
+		int lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
+ 		int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+	}
+
+
 	if (vexRT[Btn6D] == 1)
 	{
 		if (lArm == rArm)
@@ -253,35 +302,11 @@ task usercontrol()
   }
 
 
-    // Pivot System
-
-  if (vexRT[BTN8D] == 1)
-  {
-  	while (lArm < 1500)
-		{
-			if (lArm == rArm)
-			{
-			motor[rArmMotor] = -127;
-			motor[lArmMotor] = -127;
-		}
-
-		else if (lArm > rArm)
-			{
-			motor[rArmMotor] = (-127 + motorspeed);
-			motor[lArmMotor] = -127;
-		}
-
-		else if (lArm < rArm)
-			{
-			motor[rArmMotor] = -127;
-			motor[lArmMotor] = (-127 + motorspeed);
-		}
-	}
-}
+    // MACro System
 
 
-	motor[lArmMotor] = 0;
-	motor[rArmMotor] = 0;
+
+
 
   	if (vexRT[Btn5U] == 1)
   	{
