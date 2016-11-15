@@ -85,7 +85,7 @@ task autonomous()
 		ClearTimer(T1);
 	// move forward, pick up star
 
-	while (time1[T1] < 1650)
+	while (time1[T1] < 1300)
 	{
 	motor[rFrontMotor] = 127;
 	motor[rBackMotor] = 127;
@@ -113,31 +113,30 @@ task autonomous()
 	lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
   rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 	}
+
+	motor[rFrontMotor] = 0;
+	motor[rBackMotor] = 0;
+	motor[lFrontMotor] = 0;
+	motor[lBackMotor] = 0;
 	motor[lArmMotor] = 0;
 	motor[rArmMotor] = 0;
 	motor[lPivot] = -32;
 	motor[rPivot] = -32;
 	wait1Msec(60);
-	motor[lPivot] = 0;
-	motor[rPivot] = 0;
+	motor[lPivot] = 20;
+	motor[rPivot] = 20;
 
-	for (int i = 0; i > -80; i--) {
 
-	motor[rFrontMotor] = i;
-	motor[rBackMotor] = i;
-	motor[lFrontMotor] = i;
-	motor[lBackMotor] = i;
-	wait1Msec(5);
-
-  }
-
-	while (time1[T1] < 1000)
+	clearTimer(T4);
+	while (time1[T4] < 2000)
 	{
-	motor[rFrontMotor] = -80;
-	motor[rBackMotor] = -80;
-	motor[lFrontMotor] = -80;
-	motor[lBackMotor] = -80;
+	motor[rFrontMotor] = -63;
+	motor[rBackMotor] = -63;
+	motor[lFrontMotor] = -63;
+	motor[lBackMotor] = -63;
 	}
+
+
 	motor[rFrontMotor] = 0;
 	motor[rBackMotor] = 0;
 	motor[lFrontMotor] = 0;
@@ -145,9 +144,9 @@ task autonomous()
 
 	// turn and goto fence
 
-	ClearTimer(T1);
+	ClearTimer(T2);
 
-		while (time1[T1] < 250)
+		while (time1[T2] < 330)
 	{
 	motor[rFrontMotor] = -63;
 	motor[rBackMotor] = -63;
@@ -159,22 +158,24 @@ task autonomous()
 	motor[lFrontMotor] = 0;
 	motor[lBackMotor] = 0;
 
+	wait1Msec(100);
 
-	ClearTimer(T1);
+	ClearTimer(T3);
 
-		while (time1[T1] < 2650)
+		while (time1[T3] < 2500)
 	{
 	motor[rFrontMotor] = -127;
 	motor[rBackMotor] = -127;
 	motor[lFrontMotor] = -115;
 	motor[lBackMotor] = -115;
 	}
+
 	motor[rFrontMotor] = 0;
 	motor[rBackMotor] = 0;
 	motor[lFrontMotor] = 0;
 	motor[lBackMotor] = 0;
 
-		while (lArm < 2000)
+	while (lArm < 2000)
 	{
 	motor[lArmMotor] = -127;
 	motor[rArmMotor] = -127;
@@ -195,6 +196,7 @@ task autonomous()
 	motor[rPivot] = 0;
 
 }
+
 
 
 /////////////////////////// USER CONTROL ///////////////////////////////////////////
