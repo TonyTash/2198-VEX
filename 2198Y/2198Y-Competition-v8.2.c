@@ -16,7 +16,7 @@
 // 2198Y Drive Program
 // Last Updated by Tony T
 
-	int lOffset = 220;
+	int lOffset = 280;
 	int rOffset = 0;
 	int lPOffset = 0;
 	int rPOffset = 0;
@@ -72,7 +72,7 @@ task autonomous()
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
   int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
-	while (rPivotSensor < 2420)
+	while (rPivotSensor < 2550)
 	{
 		motor[lPivot] = -127;
 		motor[rPivot] = -127;
@@ -85,7 +85,7 @@ task autonomous()
 		ClearTimer(T1);
 	// move forward, pick up star
 
-	while (time1[T1] < 1250)
+	while (time1[T1] < 1800)
 	{
 	motor[rFrontMotor] = 127;
 	motor[rBackMotor] = 127;
@@ -108,8 +108,8 @@ task autonomous()
 	{
 	motor[lArmMotor] = -127;
 	motor[rArmMotor] = -127;
-	motor[lPivot] = 36;
-	motor[rPivot] = 36;
+	motor[lPivot] = 15;
+	motor[rPivot] = 15;
 	lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
   rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 	}
@@ -123,12 +123,12 @@ task autonomous()
 	motor[lPivot] = -32;
 	motor[rPivot] = -32;
 	wait1Msec(60);
-	motor[lPivot] = 20;
-	motor[rPivot] = 20;
+	motor[lPivot] = 15;
+	motor[rPivot] = 15;
 
 
 	clearTimer(T4);
-	while (time1[T4] < 2000)
+	while (time1[T4] < 1650)
 	{
 	motor[rFrontMotor] = -63;
 	motor[rBackMotor] = -63;
@@ -146,7 +146,7 @@ task autonomous()
 
 	ClearTimer(T2);
 
-		while (time1[T2] < 340)
+		while (time1[T2] < 300)
 	{
 	motor[rFrontMotor] = -63;
 	motor[rBackMotor] = -63;
@@ -254,10 +254,23 @@ else if (vexRT[Btn8L] == 1)
 
 		// MACRO PROGRAMS
 
-  	while (((SensorValue[rArmPot] + SensorValue[LArmPot])/2 > 250) && (armMode == 1))
+  	while (((SensorValue[rArmPot] + SensorValue[LArmPot])/2 > 120) && (armMode == 1))
 		{
 		lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
   	rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+
+  	if (rPivotSensor < 3000)
+	{
+		motor[lPivot] = -127;
+		motor[rPivot] = -127;
+		lPivotSensor = (4096 - (SensorValue[lPivotPot] - lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  	rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
+	}
+	else
+	{
+	motor[rPivot] = 0;
+	motor[lPivot] = 0;
+}
 
   	if (lArm == rArm)
 			{
@@ -278,8 +291,26 @@ else if (vexRT[Btn8L] == 1)
 
 }
 	// COMPARATORS INVERTED
-	while ((armMode == 2) && (((SensorValue[rArmPot] + SensorValue[lArmPot])/2 > 1300)|| ((SensorValue[rArmPot] + SensorValue[lArmPot])/2 < 1100))
+	while ((armMode == 2) && (((SensorValue[rArmPot] + SensorValue[lArmPot])/2 > 1500)|| ((SensorValue[rArmPot] + SensorValue[lArmPot])/2 < 1000))
 	{
+
+	if ((SensorValue[rPivotPot]) < 3000)
+	{
+		motor[lPivot] = -127;
+		motor[rPivot] = -127;
+	}
+	else if ((SensorValue[rPivotPot]) > 3600)
+	{
+	motor[rPivot] = 127;
+	motor[lPivot] = 127;
+}
+	else
+	{
+	motor[rPivot] = 0;
+	motor[lPivot] = 0;
+}
+
+
 		if (SensorValue[rArmPot] > 1200)
 		{
 
@@ -331,7 +362,16 @@ else if (vexRT[Btn8L] == 1)
 
 	// ARM PROGRAM
 
-	if (vexRT[Btn6D] == 1)
+		if (vexRT[Btn7R] == 1)
+	{
+			motor[lArmMotor] = 127;
+	}
+		else if (vexRT[Btn7L] == 1)
+	{
+			motor[rArmMotor] = 127;
+	}
+
+	else if (vexRT[Btn6D] == 1)
 	{
 		if (lArm == rArm)
 			{
