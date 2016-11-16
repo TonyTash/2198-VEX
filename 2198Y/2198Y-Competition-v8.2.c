@@ -421,6 +421,9 @@ else if (vexRT[Btn8L] == 1)
 	   armMode = 0;
    }
 
+
+   ////////////////////////PIVOT//////////////////
+
    if (vexRT[Btn7U] == 1)
    {
      pivotHold = 1;
@@ -430,17 +433,47 @@ else if (vexRT[Btn8L] == 1)
      pivotHold = 0;
   }
 
-  	if (vexRT[Btn5U] == 1)
-  	{
-  	motor[lPivot] = 127;
-  	motor[rPivot] = 127;
-  	}
-
-  	else if (vexRT[Btn5D] == 1)
-  	{
-		motor[rPivot] = -127;
-		motor[lPivot] = -127;
+else if (vexRT[Btn6D] == 1)
+	{
+		if (lArm == rArm)
+			{
+			motor[rArmMotor] = 127;
+			motor[lArmMotor] = 127;
 		}
+
+		else if (lArm > rArm)
+			{
+			motor[rArmMotor] = 127;
+			motor[lArmMotor] = (127 - motorspeed);
+		}
+
+		else if (lArm < rArm) {
+			motor[rArmMotor] = (127 - motorspeed);
+			motor[lArmMotor] = 127;
+		}
+		armMode = 0;
+	}
+
+	else if (vexRT[Btn6U] == 1)
+	{
+		if (lArm == rArm)
+			{
+			motor[rArmMotor] = -127;
+			motor[lArmMotor] = -127;
+		}
+
+		else if (lArm > rArm)
+			{
+			motor[rArmMotor] = (-127 + motorspeed);
+			motor[lArmMotor] = -127;
+		}
+
+		else if (lArm < rArm)
+			{
+			motor[rArmMotor] = -127;
+			motor[lArmMotor] = (-127 + motorspeed);
+		}
+	}
 
 		else if (pivotHold == 0)
     {
