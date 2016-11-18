@@ -15,10 +15,10 @@
 // 2198Y Drive Program
 // Last Updated by Tony T
 
-	int lOffset = 280;
+	int lOffset = 220;
 	int rOffset = 0;
 	int lPOffset = 0;
-	int rPOffset = 0;
+	int rPOffset = 350;
 	int pivotHold = 0;
 	int armMode = 0;
 	// 0 = user
@@ -63,7 +63,6 @@ void ccw() {
 	motor[rBackMotor] = 127;
 }
 
-
 //////////////////////////// PRE- AUTONOMOUS ///////////////////////////////////////
 
 void pre_auton()
@@ -77,7 +76,7 @@ void pre_auton()
 }
 
 //////////////////////////// AUTONOMOUS ////////////////////////////////////////////
-
+\
 task autonomous()
 {
 
@@ -91,8 +90,7 @@ task autonomous()
 	6. Throw stars down
 	7. Move sideways
 	*/
-	int lPOffset = 0;
-	int rPOffset = 350;
+
 
 	// turn shovel down
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
