@@ -240,8 +240,8 @@ task autonomous()
 	int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 
 	// raise arm
-		motor[lPivot] = 55;
-		motor[rPivot] = 55;
+		motor[lPivot] = 36;
+		motor[rPivot] = 36;
 
 	while (lArm < 1200)
 	{
@@ -256,8 +256,8 @@ task autonomous()
 	motor[lPivot] = -32;
 	motor[rPivot] = -32;
 	wait1Msec(60);
-	motor[lPivot] = 15;
-	motor[rPivot] = 15;
+	motor[lPivot] = 18;
+	motor[rPivot] = 18;
 
 
 	clearTimer(T4);
@@ -272,7 +272,7 @@ task autonomous()
 
 	ClearTimer(T2);
 
-	while (time1[T2] < 370)
+	while (time1[T2] < 430)
 	{
 		cw();
 	}
@@ -282,7 +282,7 @@ task autonomous()
 
 	ClearTimer(T3);
 
-	while (time1[T3] < 2500)
+	while (time1[T3] < 2650)
 	{
 		backward();
 	}
