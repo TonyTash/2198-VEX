@@ -64,6 +64,7 @@ int speed = abs(lArm - rArm);
 
 
     //six bar control.
+    //if(SensorValue[leftArmSensor] > 567) || SensorValue[rightArmSensor] < 1718 )
     if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
     {
     	if(vexRT[Btn5U] == 1)

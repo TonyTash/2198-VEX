@@ -43,7 +43,7 @@ task autonomous()
 task usercontrol()
 {
 
-//v2.2changelog: change six bar control to 6U and 6D.
+//v2.2changelog: change collector control to 6U and 6D.
 
 	while (true)
 	{
@@ -89,12 +89,12 @@ task usercontrol()
 	  	motor[towerRight] = 0;
 	  }
 	  //collector
-	  if(vexRT[Btn7L] == 1)
+	  if(vexRT[Btn6U] == 1)
 	  {
 	  	motor[leftCollector] = 127;
 	  	motor[rightCollector] = 127;
 	  }
-	  else if(vexRT[Btn7R] == 1)
+	  else if(vexRT[Btn6D] == 1)
 	  {
 	  	motor[leftCollector] = -127;
 	  	motor[rightCollector] = -127;
