@@ -21,6 +21,8 @@ int lPOffset = 0;
 int rPOffset = 350;
 int pivotHold = 0;
 int armMode = 0;
+int rPivotCalibrated = 0;
+int difference = 0;
 // 0 = user
 // 1 = arm down
 // 2 = arm half up
@@ -34,6 +36,8 @@ int armMode = 0;
 #pragma userControlDuration(105)
 
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+
+
 
 void forward()
 {
@@ -345,6 +349,9 @@ task usercontrol()
 		//}
 
 
+		rPivotCalibrated = ((SensorValue[rPivotPot])-1800);
+		difference = rArm - rPivotCalibrated;
+
 
 
 
@@ -447,7 +454,7 @@ task usercontrol()
 
 		if (armMode == 2)
 		{
-				if ((SensorValue[rPivotPot]) < 1500)
+			if ((SensorValue[rPivotPot]) < 1500)
 			{
 				pivotDown(lPivotSensor, rPivotSensor, pivotspeed);
 			}
@@ -463,24 +470,33 @@ task usercontrol()
 
 		else if (vexRT[Btn5U] == 1)
 		{
-			pivotUp(lPivotSensor, rPivotSensor, pivotspeed)
+			pivotUp(lPivotSensor, rPivotSensor, pivotspeed);
 		}
 
 		else if (vexRT[Btn5D] == 1)
 		{
-			pivotDown(lPivotSensor, rPivotSensor, pivotspeed)
+			pivotDown(lPivotSensor, rPivotSensor, pivotspeed);
 		}
 
-		else if (pivotHold == 0)
+			else if (difference > 250) { // shovel greater then arm
+			motor[rPivot] = (difference*-2);
+			motor[lPivot] = (difference*-2);
+		}
+
+			else if (difference < -250) { // shovel smaller then arm
+			motor[rPivot] = (difference*-2);
+			motor[lPivot] = (difference*-2);
+		}
+
+	else if (pivotHold == 0)
 		{
 			pivotRest();
 		}
 
-
 		else
 		{
-			motor[lPivot] = 30;
-			motor[rPivot] = 30;
+			motor[lPivot] = 15;
+			motor[rPivot] = 15;
 		}
 	}
 }
