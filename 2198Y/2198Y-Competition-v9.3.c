@@ -192,7 +192,7 @@ void pre_auton()
 }
 
 //////////////////////////// AUTONOMOUS ////////////////////////////////////////////
-\
+
 task autonomous()
 {
 
@@ -212,7 +212,7 @@ task autonomous()
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
 	int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
-	while (rPivotSensor < 2450)
+	while (rPivotSensor < 1800)
 	{
 		motor[lPivot] = -127;
 		motor[rPivot] = -127;
@@ -237,8 +237,8 @@ task autonomous()
 	int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 
 	// raise arm
-		motor[lPivot] = 60;
-		motor[rPivot] = 60;
+		motor[lPivot] = 32;
+		motor[rPivot] = 32;
 
 	while (lArm < 1200)
 	{
@@ -258,7 +258,7 @@ task autonomous()
 
 
 	clearTimer(T4);
-	while (time1[T4] < 1650)
+	while (time1[T4] < 1700)
 	{
 		backward();
 	}
@@ -269,7 +269,7 @@ task autonomous()
 
 	ClearTimer(T2);
 
-	while (time1[T2] < 430)
+	while (time1[T2] < 400)
 	{
 		cw();
 	}
@@ -279,7 +279,7 @@ task autonomous()
 
 	ClearTimer(T3);
 
-	while (time1[T3] < 2650)
+	while (time1[T3] < 2800)
 	{
 		backward();
 	}
@@ -478,14 +478,14 @@ task usercontrol()
 			pivotDown(lPivotSensor, rPivotSensor, pivotspeed);
 		}
 
-			else if (difference > 250) { // shovel greater then arm
-			motor[rPivot] = (difference*-2);
-			motor[lPivot] = (difference*-2);
+			else if ((difference > 150) && (sensorValue[rArmPot] < 2300)) { // shovel greater then arm
+			motor[rPivot] = (difference/-2);
+			motor[lPivot] = (difference/-2);
 		}
 
-			else if (difference < -250) { // shovel smaller then arm
-			motor[rPivot] = (difference*-2);
-			motor[lPivot] = (difference*-2);
+			else if ((difference < -100) && (sensorValue[rArmPot] < 2300)) { // shovel smaller then arm
+			motor[rPivot] = (difference/-2);
+			motor[lPivot] = (difference/-2);
 		}
 
 	else if (pivotHold == 0)
