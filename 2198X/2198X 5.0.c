@@ -32,6 +32,13 @@ void forwardA()
   motor[backLeftMotor] = 70;
   motor[backRightMotor] = 60;
 }
+void backwardA()
+{
+	motor[frontLeftMotor] = -70;
+  motor[frontRightMotor] = -60;
+  motor[backLeftMotor] = -70;
+  motor[backRightMotor] = -60;
+}
 void counterClockwiseRotationOneSide()
 {
 	motor[frontRightMotor] = 60;
@@ -79,6 +86,11 @@ void outtake()
 	motor[leftCollector] = -127;
 	motor[rightCollector] = -127;
 }
+void stopTaking()
+{
+	motor[leftCollector] = 0;
+	motor[rightCollector] = 0;
+}
 void armStop()
 {
 	motor[rightArmMotor] = 0;
@@ -119,72 +131,100 @@ task autonomous()
 		armUp();
 	}
 		armStop();
-	while(SensorValue[leftArmSensor] > 617 && SensorValue[rightArmSensor] < 1695)
-	{
-		armDown();
-	}
-	armStop();
+	while(SensorValue[leftArmSensor] > 614 || SensorValue[rightArmSensor] < 1688)
+    	{
+    		armDown();
+    	}
+  while(SensorValue[leftArmSensor] < 614 || SensorValue[rightArmSensor] > 1688)
+    	{
+    		armUp();
+    	}
+  while(SensorValue[leftArmSensor] == 614 || SensorValue[rightArmSensor] == 1688)
+    	{
+    		armStop();
+    	}
   ClearTimer(T1);
-  while(time1[T1]<1850)
+  while(time1[T1]<100)
+	{
+		rest();
+	}
+	ClearTimer(T1);
+  while(time1[T1]<2050)
 	{
 		forwardA();
 		intake();
 	}
+	ClearTimer(T1);
+	while(time1[T1] < 200)
+	{
+		rest();
+	}
+	ClearTimer(T1);
+	while(time1[T1] < 1500)
+	{
+		backwardA();
+	}
 	rest();
 	ClearTimer(T1);
-	while(time1[T1]<=300)
+	while(time1[T1]<=350)
 	{
 		motor[sidewaysMotor] = -127;
-		counterClockwiseRotationOneSide();
-		intake();
 	}
 	motor[sidewaysMotor] = 0;
 	rest();
 	ClearTimer(T1);
-	while(time1[T1]<800)
-	{
-		forwardA();
-		intake();
-	}
-	rest();
-	ClearTimer(T1);
-	while(time1[T1]<500)
+	while(time1[T1]<625)
 	{
 		counterClockwiseRotationBothSide();
-		intake();
 	}
 	rest();
 	ClearTimer(T1);
-	while(time1(T1)<1500)
+	while(time1[T1]<1000)
 	{
 		forwardA();
 	}
 	rest();
-	ClearTimer(T1);
-	while(time1[T1]<400)
-	{
-		motor[sidewaysMotor] = -127;
-	}
-		motor[sidewaysMotor] = 0;
-	while(SensorValue[leftArmSensor] < 1984 && SensorValue[rightArmSensor] > 307)
+	while(SensorValue[leftArmSensor] < 2038 || SensorValue[rightArmSensor] > 282)
 	{
 		armUp();
 	}
 	armStop();
 	ClearTimer(T1);
-	while(time1[T1]<200)
+	while(time1[T1] < 1300)
 	{
 		forwardA();
 	}
 	rest();
 	ClearTimer(T1);
-	while(time1[T1]<3000)
+	while(time1[T1] < 1800)
+	{
+		motor[sidewaysMotor] = 127;
+	}
+	motor[sidewaysMotor] = 0;
+	ClearTimer(T1);
+	while(time1(T1)<1000)
 	{
 		outtake();
 	}
-	motor[leftCollector] = 0;
-	motor[rightCollector] = 0;
-  rest();
+	rest();
+	stopTaking();
+	ClearTimer(T1);
+	while(time1[T1] < 400)
+	{
+		backwardA();
+	}
+	ClearTimer(T1);
+	while(time1[T1] < 400)
+	{
+		forwardA();
+	}
+	rest();
+	ClearTimer(T1);
+	while(time1[T1] < 1000)
+	{
+		outtake();
+	}
+	stopTaking();
 }
 
 task usercontrol()
@@ -197,7 +237,7 @@ task usercontrol()
 		int forbackward = 0;
 		int threshold1 = 63;
 		int threshold2 = 30;
-		int lArm = SensorValue[leftArmSensor] - 567;
+		int lArm = SensorValue[leftArmSensor] - 618;
 		int rArm = (-SensorValue[rightArmSensor] + 1770);
 		int speed = abs(lArm - rArm);
 
@@ -230,7 +270,7 @@ task usercontrol()
 
 
     //six bar control.
-    if(SensorValue[leftArmSensor] > 607 && SensorValue[rightArmSensor] < 1705 && SensorValue[leftArmSensor] < 1984 && SensorValue[rightArmSensor] > 307)
+    if(SensorValue[leftArmSensor] > 535 && SensorValue[rightArmSensor] < 1709 && SensorValue[leftArmSensor] < 2088 && SensorValue[rightArmSensor] > 232)
     {
   		//six bar seperately control
   		if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
@@ -305,7 +345,7 @@ task usercontrol()
     	}
     }
     //lower than starting position.
-    else if(SensorValue[leftArmSensor] < 607 || SensorValue[rightArmSensor] > 1678)
+    else if(SensorValue[leftArmSensor] < 535 || SensorValue[rightArmSensor] > 1709)
     {
     	if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
     	{
@@ -359,7 +399,7 @@ task usercontrol()
     	}
     }
     //higher than highest position.
-    else if(SensorValue[leftArmSensor] > 1984 || SensorValue[rightArmSensor] < 307)
+    else if(SensorValue[leftArmSensor] > 2088 || SensorValue[rightArmSensor] < 232)
     {
     	if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
     	{
@@ -412,7 +452,17 @@ task usercontrol()
    	  	}
     	}
     }
-
+		if(vexRT[Btn8R] == 1)
+		{
+    	if(SensorValue[leftArmSensor] < 614 || SensorValue[rightArmSensor] > 1688)
+    	{
+    		armUp();
+    	}
+    	else if(SensorValue[leftArmSensor] == 614 || SensorValue[rightArmSensor] == 1688)
+    	{
+    		armStop();
+    	}
+    }
     //convey and collector
     if(vexRT[Btn5U] == 1)
     {
