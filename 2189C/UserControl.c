@@ -14,7 +14,7 @@
 
 // 2198Y Drive Program
 // Last Updated by Tony T
-
+	int speed = 60;
 	int lOffset = 1640;
 	int rOffset = 1845;
 	int lPOffset = 0;
@@ -36,6 +36,87 @@
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
 
 
+void forward(int speed)
+{
+	motor[lFrontMotor] = speed;
+	motor[lBackMotor] = speed;
+	motor[rFrontMotor] = speed;
+	motor[rBackMotor] = speed;
+}
+
+void backward()
+{
+	motor[lFrontMotor] = -127;
+	motor[lBackMotor] = -127;
+	motor[rFrontMotor] = -115;
+	motor[rBackMotor] = -115;
+}
+
+void rest()
+{
+	motor[lFrontMotor] = 0;
+	motor[lBackMotor] = 0;
+	motor[rFrontMotor] = 0;
+	motor[rBackMotor] = 0;
+}
+
+void cw()
+{
+	motor[lFrontMotor] = 127;
+	motor[lBackMotor] = 127;
+	motor[rFrontMotor] = -127;
+	motor[rBackMotor] = -127;
+}
+
+void ccw()
+{
+	motor[lFrontMotor] = -127;
+	motor[lBackMotor] = -127;
+	motor[rFrontMotor] = 127;
+	motor[rBackMotor] = 127;
+}
+
+
+void armUp(int lArm, int rArm, int motorspeed)
+{
+	if (lArm == rArm)
+	{
+		motor[rArmMotor] = 127;
+		motor[lArmMotor] = 127;
+	}
+
+	else if (lArm > rArm)
+	{
+		motor[rArmMotor] = 127;
+		motor[lArmMotor] = (127 - motorspeed);
+	}
+
+	else if (lArm < rArm) {
+		motor[rArmMotor] = (127 - motorspeed);
+		motor[lArmMotor] = 127;
+	}
+}
+
+void armDown(int lArm, int rArm, int motorspeed)
+{
+		if (lArm == rArm)
+			{
+				motor[rArmMotor] = -127;
+				motor[lArmMotor] = -127;
+			}
+
+			else if (lArm > rArm)
+			{
+				motor[rArmMotor] = (-127 + motorspeed);
+				motor[lArmMotor] = -127;
+			}
+
+			else if (lArm < rArm)
+			{
+				motor[rArmMotor] = -127;
+				motor[lArmMotor] = (-127 + motorspeed);
+			}
+}
 
 //////////////////////////// PRE- AUTONOMOUS ///////////////////////////////////////
 
@@ -53,7 +134,58 @@ void pre_auton()
 
 task autonomous()
 {
-// na
+	int rArm = (SensorValue[lArmPot] - lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
+  int lArm = (SensorValue[rArmPot] - rOffset); // ALSO NEGATES THE POTENTIOMETER
+
+  while ((SensorValue[rArmPot]) > 2100) // up
+		{
+		motor[lArmMotor] = 127;
+		motor[rArmMotor] = 127;
+		}
+	motor[lArmMotor] = 0;
+	motor[rArmMotor] = 0;
+	forward(60);
+	motor[lPivot] = 127;
+	motor[rPivot] = 127;
+	wait1Msec(2500);
+	forward(20);
+	wait1Msec(1000);
+	rest();
+
+	// ROTATE Less
+	// UP HIGHER
+	// MOVE LESS
+	// less drive forward
+		while ((SensorValue[rArmPot]) > 1500)
+		{
+		motor[lArmMotor] = 127;
+		motor[rArmMotor] = 127;
+		lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
+		rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+		}
+		motor[lPivot] = 0;
+		motor[rPivot] = 0;
+		motor[lArmMotor] = 0;
+		motor[rArmMotor] = 0;
+		cw();
+		wait1Msec(750);
+		forward(60);
+		wait1Msec(1000);
+		while ((SensorValue[rArmPot]) > 1150)
+		{
+		motor[lArmMotor] = 127;
+		motor[rArmMotor] = 127;
+		lArm = (SensorValue[lArmPot] + lOffset); // LARM MINUS THE OFFSER (TO CALIBRATE)
+		rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
+		}
+		motor[lPivot] = -127;
+		motor[rPivot] = -127;
+		motor[lArmMotor] = 0;
+		motor[rArmMotor] = 0;
+		wait1Msec(1500);
+		motor[lPivot] = 0;
+		motor[rPivot] = 0;
+
 }
 
 task usercontrol()

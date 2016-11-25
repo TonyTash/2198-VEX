@@ -21,6 +21,8 @@ int lPOffset = 0;
 int rPOffset = 350;
 int pivotHold = 0;
 int armMode = 0;
+int rPivotCalibrated = 0;
+int difference = 0;
 // 0 = user
 // 1 = arm down
 // 2 = arm half up
@@ -34,6 +36,8 @@ int armMode = 0;
 #pragma userControlDuration(105)
 
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+
+
 
 void forward()
 {
@@ -188,7 +192,7 @@ void pre_auton()
 }
 
 //////////////////////////// AUTONOMOUS ////////////////////////////////////////////
-\
+
 task autonomous()
 {
 
@@ -208,7 +212,7 @@ task autonomous()
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
 	int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
-	while (rPivotSensor < 2450)
+	while (rPivotSensor < 1800)
 	{
 		motor[lPivot] = -127;
 		motor[rPivot] = -127;
@@ -233,8 +237,8 @@ task autonomous()
 	int rArm = (SensorValue[rArmPot] + rOffset); // ALSO NEGATES THE POTENTIOMETER
 
 	// raise arm
-		motor[lPivot] = 60;
-		motor[rPivot] = 60;
+		motor[lPivot] = 32;
+		motor[rPivot] = 32;
 
 	while (lArm < 1200)
 	{
@@ -254,7 +258,7 @@ task autonomous()
 
 
 	clearTimer(T4);
-	while (time1[T4] < 1650)
+	while (time1[T4] < 1700)
 	{
 		backward();
 	}
@@ -265,7 +269,7 @@ task autonomous()
 
 	ClearTimer(T2);
 
-	while (time1[T2] < 430)
+	while (time1[T2] < 400)
 	{
 		cw();
 	}
@@ -275,7 +279,7 @@ task autonomous()
 
 	ClearTimer(T3);
 
-	while (time1[T3] < 2650)
+	while (time1[T3] < 2800)
 	{
 		backward();
 	}
@@ -344,6 +348,9 @@ task usercontrol()
 		//	motor[lArmMotor] = 127;
 		//}
 
+
+		rPivotCalibrated = ((SensorValue[rPivotPot])-1800);
+		difference = rArm - rPivotCalibrated;
 
 
 
@@ -447,7 +454,7 @@ task usercontrol()
 
 		if (armMode == 2)
 		{
-				if ((SensorValue[rPivotPot]) < 1500)
+			if ((SensorValue[rPivotPot]) < 1500)
 			{
 				pivotDown(lPivotSensor, rPivotSensor, pivotspeed);
 			}
@@ -463,24 +470,33 @@ task usercontrol()
 
 		else if (vexRT[Btn5U] == 1)
 		{
-			pivotUp(lPivotSensor, rPivotSensor, pivotspeed)
+			pivotUp(lPivotSensor, rPivotSensor, pivotspeed);
 		}
 
 		else if (vexRT[Btn5D] == 1)
 		{
-			pivotDown(lPivotSensor, rPivotSensor, pivotspeed)
+			pivotDown(lPivotSensor, rPivotSensor, pivotspeed);
 		}
 
-		else if (pivotHold == 0)
+			else if ((difference > 150) && (sensorValue[rArmPot] < 2300)) { // shovel greater then arm
+			motor[rPivot] = (difference/-2);
+			motor[lPivot] = (difference/-2);
+		}
+
+			else if ((difference < -100) && (sensorValue[rArmPot] < 2300)) { // shovel smaller then arm
+			motor[rPivot] = (difference/-2);
+			motor[lPivot] = (difference/-2);
+		}
+
+	else if (pivotHold == 0)
 		{
 			pivotRest();
 		}
 
-
 		else
 		{
-			motor[lPivot] = 30;
-			motor[rPivot] = 30;
+			motor[lPivot] = 15;
+			motor[rPivot] = 15;
 		}
 	}
 }
