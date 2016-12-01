@@ -61,19 +61,19 @@ void rest()
 }
 void armUp()
 {
-	if(SensorValue[leftArmSensor] - 567 == (-SensorValue[rightArmSensor] + 1770))
+	if(SensorValue[leftArmSensor] - 557 == (-SensorValue[rightArmSensor] + 1800))
     	{
    			motor[rightArmMotor] = 127;
    			motor[leftArmMotor] = 127;
    		}
-  else if(SensorValue[leftArmSensor] - 567 > (-SensorValue[rightArmSensor] + 1770))
+  else if(SensorValue[leftArmSensor] - 557 > (-SensorValue[rightArmSensor] + 1800))
    		{
    				motor[rightArmMotor] = 127;
-   				motor[leftArmMotor] = 127-abs((SensorValue[leftArmSensor] - 567) - (-SensorValue[rightArmSensor] + 1770));
+   				motor[leftArmMotor] = 127-abs((SensorValue[leftArmSensor] - 557) - (-SensorValue[rightArmSensor] + 1800));
     	}
-  else if(SensorValue[leftArmSensor] - 567 < (-SensorValue[rightArmSensor] + 1770))
+  else if(SensorValue[leftArmSensor] - 557 < (-SensorValue[rightArmSensor] + 1800))
     	{
-   				motor[rightArmMotor] = 127-abs((SensorValue[leftArmSensor] - 567) - (-SensorValue[rightArmSensor] + 1770));
+   				motor[rightArmMotor] = 127-abs((SensorValue[leftArmSensor] - 557) - (-SensorValue[rightArmSensor] + 1800));
    				motor[leftArmMotor] = 127;
     	}
 }
@@ -99,21 +99,21 @@ void armStop()
 }
 void armDown()
 {
-		if(SensorValue[leftArmSensor] - 567 == (-SensorValue[rightArmSensor] + 1770))
+		if(SensorValue[leftArmSensor] - 557 == (-SensorValue[rightArmSensor] + 1800))
     	{
    			motor[rightArmMotor] = -127;
    			motor[leftArmMotor] = -127;
    		}
-  else if(SensorValue[leftArmSensor] - 567 > (-SensorValue[rightArmSensor] + 1770))
+  else if(SensorValue[leftArmSensor] - 557 > (-SensorValue[rightArmSensor] + 1800))
    		{
-   			motor[rightArmMotor] = -127+abs((SensorValue[leftArmSensor] - 567) - (-SensorValue[rightArmSensor] + 1770));
+   			motor[rightArmMotor] = -127+abs((SensorValue[leftArmSensor] - 557) - (-SensorValue[rightArmSensor] + 1800));
    			motor[leftArmMotor] = -127;
 
     	}
-  else if(SensorValue[leftArmSensor] - 567 < (-SensorValue[rightArmSensor] + 1770))
+  else if(SensorValue[leftArmSensor] - 557 < (-SensorValue[rightArmSensor] + 1800))
     	{
    				motor[rightArmMotor] = -127;
-   				motor[leftArmMotor] = -127+abs((SensorValue[leftArmSensor] - 567) - (-SensorValue[rightArmSensor] + 1770));
+   				motor[leftArmMotor] = -127+abs((SensorValue[leftArmSensor] - 557) - (-SensorValue[rightArmSensor] + 1800));
     	}
 }
 void pre_auton()
@@ -150,18 +150,23 @@ task autonomous()
 		rest();
 	}
 	ClearTimer(T1);
-  while(time1[T1]<1850)
+  while(time1[T1]<1650)
 	{
 		forwardA();
 		intake();
 	}
 	ClearTimer(T1);
+	while(SensorValue[leftArmSensor]<740&&SensorValue[rightArmSensor]>1500)
+	{
+		armUp();
+	}
+		armStop();
 	while(time1[T1] < 200)
 	{
 		rest();
 	}
 	ClearTimer(T1);
-	while(time1[T1] < 1300)
+	while(time1[T1] < 1100)
 	{
 		backwardA();
 	}
@@ -250,8 +255,8 @@ task usercontrol()
 		int forbackward = 0;
 		int threshold1 = 63;
 		int threshold2 = 30;
-		int lArm = SensorValue[leftArmSensor] - 618;
-		int rArm = (-SensorValue[rightArmSensor] + 1770);
+		int lArm = SensorValue[leftArmSensor] - 557;
+		int rArm = (-SensorValue[rightArmSensor] + 1800);
 		int speed = abs(lArm - rArm);
 
 
@@ -283,7 +288,7 @@ task usercontrol()
 
 
     //six bar control.
-    if(SensorValue[leftArmSensor] > 535 && SensorValue[rightArmSensor] < 1809 && SensorValue[leftArmSensor] < 2046 && SensorValue[rightArmSensor] > 242)
+    if(SensorValue[leftArmSensor] > 535 && SensorValue[rightArmSensor] < 1809 && SensorValue[leftArmSensor] < 2036 && SensorValue[rightArmSensor] > 252)
     {
   		//six bar seperately control
   		if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
@@ -412,7 +417,7 @@ task usercontrol()
     	}
     }
     //higher than highest position.
-    else if(SensorValue[leftArmSensor] > 2046 || SensorValue[rightArmSensor] < 242)
+    else if(SensorValue[leftArmSensor] > 2036 || SensorValue[rightArmSensor] < 252)
     {
     	if(vexRT[Btn8U] == 1 && vexRT[Btn8D] == 1)
     	{
