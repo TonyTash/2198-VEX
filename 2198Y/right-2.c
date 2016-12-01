@@ -220,15 +220,12 @@ task autonomous()
 	7. Move sideways
 	*/
 
-	backward();
-	wait1Msec(150);
-	rest();
 
 	// turn shovel down
 	int lPivotSensor = (4096 - (SensorValue[lPivotPot] + lPOffset)); // LARM MINUS THE OFFSER (TO CALIBRATE)
 	int rPivotSensor = (SensorValue[rPivotPot] - rPOffset); // ALSO NEGATES THE POTENTIOMETER
 
-	while (rPivotSensor < 2000)
+	while (rPivotSensor < 1820)
 	{
 		motor[lPivot] = -127;
 		motor[rPivot] = -127;
@@ -287,7 +284,7 @@ task autonomous()
 
 	while (time1[T2] < 400)
 	{
-		cw();
+		ccw();
 	}
 	rest();
 
@@ -295,7 +292,7 @@ task autonomous()
 
 	ClearTimer(T3);
 
-	while (time1[T3] < 3250)
+	while (time1[T3] < 3100)
 	{
 		backward();
 	}
@@ -365,7 +362,7 @@ task usercontrol()
 		//}
 
 
-		rPivotCalibrated = ((SensorValue[rPivotPot])-1750);
+		rPivotCalibrated = ((SensorValue[rPivotPot])-1400);
 		difference = rArm - rPivotCalibrated;
 
 
