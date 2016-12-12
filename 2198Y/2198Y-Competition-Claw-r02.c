@@ -81,9 +81,9 @@ void ccw() // Rotate counterclockwise
 	motor[rBackMotor] = 127;
 }
 
-void armUp(int lArm, int rArm, int motorspeed)
+void armUp(int lArm, int rArm, int motorspeed) // Bring arm up
 {
-	if (lArm == rArm)
+	if (lArm == rArm) // If both potentiometers are equal, go up at the same speed
 	{
 		motor[rArmMotor] = 127;
 		motor[lArmMotor] = 127;
@@ -91,23 +91,24 @@ void armUp(int lArm, int rArm, int motorspeed)
 		motor[lArmMotor2] = 127;
 	}
 
-	else if (lArm > rArm)
+	else if (lArm > rArm) // If left arm is higher then right arm (when going up),
 	{
-		motor[rArmMotor] = 127;
-		motor[lArmMotor] = (127 - motorspeed/2);
+		motor[rArmMotor] = 127; 									// Right arm (slower arm) continues to go up full speed
+		motor[lArmMotor] = (127 - motorspeed/2); 	// Slow the left arm by the difference between the two
 		motor[rArmMotor2] = 127;
 		motor[lArmMotor2] = (127 - motorspeed/2);
 	}
 
-	else if (lArm < rArm) {
-		motor[rArmMotor] = (127 - motorspeed/2);
-		motor[lArmMotor] = 127;
+	else if (lArm < rArm) // If the right arm is higher then the left arm
+		{
+		motor[rArmMotor] = (127 - motorspeed/2);	// Slow the right arm down by the difference between the two
+		motor[lArmMotor] = 127; 									// Left arm (slower arm) continues to go up full speed
 		motor[rArmMotor2] = (127 - motorspeed/2);
 		motor[lArmMotor2] = 127;
 	}
 }
 
-void armUpNoPot()
+void armUpNoPot() // Raise arm, without using any potentiometer code
 {
 	motor[lArmMotor] = 127;
 	motor[rArmMotor] = 127;
@@ -115,7 +116,7 @@ void armUpNoPot()
 	motor[rArmMotor2] = 127;
 }
 
-void armDownNoPot()
+void armDownNoPot() // Lower arm, without using potentiometer code
 {
 	motor[lArmMotor] = -127;
 	motor[rArmMotor] = -127;
@@ -124,20 +125,20 @@ void armDownNoPot()
 }
 
 
-void armDown(int lArm, int rArm, int motorspeed)
+void armDown(int lArm, int rArm, int motorspeed) // Lower the arm, using the potentiometers
 {
-		if (lArm == rArm)
+		if (lArm == rArm) // If both arms are at equal height
 			{
-				motor[rArmMotor] = -127;
+				motor[rArmMotor] = -127; // Power all motors equally
 				motor[lArmMotor] = -127;
 				motor[rArmMotor] = -127;
 				motor[lArmMotor] = -127;
 			}
 
-			else if (lArm > rArm)
+			else if (lArm > rArm) // If the right arm is lower then the left arm
 			{
-				motor[rArmMotor] = (-127 + motorspeed/2);
-				motor[lArmMotor] = -127;
+				motor[rArmMotor] = (-127 + motorspeed/2); //Slow the right arm by the difference between the arms
+				motor[lArmMotor] = -127; 									// Run left arm at full speed (higher arm)
 				motor[rArmMotor] = (-127 + motorspeed/2);
 				motor[lArmMotor] = -127;
 			}
