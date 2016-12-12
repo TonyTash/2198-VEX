@@ -5,10 +5,10 @@
 #pragma config(Motor,  port1,           lBackMotor,    tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           rFrontMotor,   tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           rBackMotor,    tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port4,           rArm2,         tmotorVex393, openLoop)
-#pragma config(Motor,  port5,           lArm2,         tmotorVex393, openLoop)
-#pragma config(Motor,  port6,           rArmMotor,     tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port7,           lArmMotor,     tmotorVex393, openLoop)
+#pragma config(Motor,  port4,           lArmMotor2,    tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port5,           rArmMotor2,    tmotorVex393, openLoop)
+#pragma config(Motor,  port6,           rArmMotor,     tmotorVex393, openLoop)
+#pragma config(Motor,  port7,           lArmMotor,     tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port8,           rPivot,        tmotorVex393, openLoop)
 #pragma config(Motor,  port9,           lPivot,        tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port10,          lFrontMotor,   tmotorVex393, openLoop)
@@ -17,7 +17,7 @@
 // 2198Y Drive Program
 // Last Updated by Tony T
 
-int lOffset = 260;
+int lOffset = 240;
 int rOffset = 0;
 int lPOffset = 0;
 int rPOffset = 300;
@@ -87,17 +87,23 @@ void armUp(int lArm, int rArm, int motorspeed)
 	{
 		motor[rArmMotor] = 127;
 		motor[lArmMotor] = 127;
+		motor[rArmMotor2] = 127;
+		motor[lArmMotor2] = 127;
 	}
 
 	else if (lArm > rArm)
 	{
 		motor[rArmMotor] = 127;
-		motor[lArmMotor] = (127 - motorspeed);
+		motor[lArmMotor] = (127 - motorspeed/2);
+		motor[rArmMotor2] = 127;
+		motor[lArmMotor2] = (127 - motorspeed/2);
 	}
 
 	else if (lArm < rArm) {
-		motor[rArmMotor] = (127 - motorspeed);
+		motor[rArmMotor] = (127 - motorspeed/2);
 		motor[lArmMotor] = 127;
+		motor[rArmMotor2] = (127 - motorspeed/2);
+		motor[lArmMotor2] = 127;
 	}
 }
 
@@ -105,12 +111,16 @@ void armUpNoPot()
 {
 	motor[lArmMotor] = 127;
 	motor[rArmMotor] = 127;
+	motor[lArmMotor2] = 127;
+	motor[rArmMotor2] = 127;
 }
 
 void armDownNoPot()
 {
-	motor[lArmMotor] = 127;
-	motor[rArmMotor] = 127;
+	motor[lArmMotor] = -127;
+	motor[rArmMotor] = -127;
+	motor[lArmMotor2] = -127;
+	motor[rArmMotor2] = -127;
 }
 
 
@@ -120,62 +130,72 @@ void armDown(int lArm, int rArm, int motorspeed)
 			{
 				motor[rArmMotor] = -127;
 				motor[lArmMotor] = -127;
+				motor[rArmMotor] = -127;
+				motor[lArmMotor] = -127;
 			}
 
 			else if (lArm > rArm)
 			{
-				motor[rArmMotor] = (-127 + motorspeed);
+				motor[rArmMotor] = (-127 + motorspeed/2);
+				motor[lArmMotor] = -127;
+				motor[rArmMotor] = (-127 + motorspeed/2);
 				motor[lArmMotor] = -127;
 			}
 
 			else if (lArm < rArm)
 			{
 				motor[rArmMotor] = -127;
-				motor[lArmMotor] = (-127 + motorspeed);
+				motor[lArmMotor] = (-127 + motorspeed/2);
+				motor[rArmMotor] = -127;
+				motor[lArmMotor] = (-127 + motorspeed/2);
 			}
 }
 
 void pivotUp(int lPivotSensor, int rPivotSensor, int pivotspeed)
 {
 
-			if (lPivotSensor == rPivotSensor)
-			{
+			//if (lPivotSensor == rPivotSensor)
+			//{
 				motor[lPivot] = 127;
 				motor[rPivot] = 127;
-			}
+			//}
 
-			else if (lPivotSensor > rPivotSensor)
-			{
-				motor[rPivot] = 127;
-				motor[lPivot] = (127 - pivotspeed);
-			}
+			//else if (lPivotSensor > rPivotSensor)
+			//{
+			//	motor[rPivot] = 127;
+			//	motor[lPivot] = (127 - pivotspeed);
+			//}
 
-			else if (lPivotSensor < rPivotSensor) {
-				motor[rPivot] = (127 - pivotspeed);
-				motor[lPivot] = 127;
-			}
+			//else if (lPivotSensor < rPivotSensor) {
+			//	motor[rPivot] = (127 - pivotspeed);
+			//	motor[lPivot] = 127;
+			//}
 
 }
 
 void pivotDown(int lPivotSensor, int rPivotSensor, int pivotspeed)
 {
-	if (lPivotSensor == rPivotSensor)
-			{
-				motor[rPivot] = -127;
-				motor[lPivot] = -127;
-			}
 
-			else if (lPivotSensor > rPivotSensor)
-			{
-				motor[rPivot] = (-127 + pivotspeed);
-				motor[lPivot] = -127;
-			}
+	motor[lPivot] = -127;
+	motor[rPivot] = -127;
 
-			else if (lPivotSensor < rPivotSensor)
-			{
-				motor[rPivot] = -127;
-				motor[lPivot] = (-127 + pivotspeed);
-			}
+	//if (lPivotSensor == rPivotSensor)
+	//		{
+	//			motor[rPivot] = -127;
+	//			motor[lPivot] = -127;
+	//		}
+
+	//		else if (lPivotSensor > rPivotSensor)
+	//		{
+	//			motor[rPivot] = (-127 + pivotspeed);
+	//			motor[lPivot] = -127;
+	//		}
+
+	//		else if (lPivotSensor < rPivotSensor)
+	//		{
+	//			motor[rPivot] = -127;
+	//			motor[lPivot] = (-127 + pivotspeed);
+	//		}
 }
 
 void armHold () {
@@ -435,27 +455,35 @@ task usercontrol()
 		else if (vexRT[Btn7R] == 1)
 		{
 			motor[rArmMotor] = -127;
+			motor[rArmMotor2] = -127;
 		}
 		else if (vexRT[Btn7L] == 1)
 		{
 			motor[lArmMotor] = -127;
+			motor[lArmMotor2] = -127;
 		}
 
 
 		else if (vexRT[Btn6U] == 1)
 		{
-			armUp(lArm, rArm, motorspeed);
+			 armUp(lArm, rArm, motorspeed);
+			//armUpNoPot();
 		}
 
 		else if (vexRT[Btn6D] == 1)
 		{
-			armDown(lArm, rArm, motorspeed);
+			 armDown(lArm, rArm, motorspeed);
+			//armDownNoPot();
 		}
 
 
 		else
 		{
-			armHold();
+			//armHold();
+			motor[lArmMotor2] = 0;
+			motor[rArmMotor2] = 0;
+			motor[lArmMotor] = 0;
+			motor[rArmMotor] = 0
 		}
 
 
