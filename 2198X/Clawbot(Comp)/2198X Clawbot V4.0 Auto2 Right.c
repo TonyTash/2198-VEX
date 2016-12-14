@@ -89,8 +89,8 @@ void backwardAuto(int speed)//distance in negative, remember to set sensor value
 
 void ccwRotationBothSide(int degree, int speed)//degree in positive, and speed in positive for both side, program will set them to negative
 {
-	int distance = (10.5*PI*degree)/(4*PI);
-	while(SensorValue[leftWheels] > -distance || SensorValue[rightWheels] < distance)
+	int distance = 6*degree/2;
+	while(SensorValue[leftWheels] > -distance && SensorValue[rightWheels] < distance)
 	{
 		motor[leftMotor1] = -speed;
 		motor[leftMotor2] = -speed;
@@ -101,10 +101,10 @@ void ccwRotationBothSide(int degree, int speed)//degree in positive, and speed i
 	}
 }
 
-void cwRotationBothSide(int degree, int speed)//degree in positive, and speed in positive for both side, program will set them to negative
+void cwRotationBothSide(int degree,int speed)//degree in positive, and speed in positive for both side, program will set them to negative
 {
-	int distance = (10.5*PI*degree)/(4*PI);
-	while(SensorValue[leftWheels] < distance || SensorValue[rightWheels] > -distance)
+	int distance = 6*degree/2;
+	while(SensorValue[leftWheels] < distance && SensorValue[rightWheels] > -distance)
 	{
 		motor[leftMotor1] = speed;
 		motor[leftMotor2] = speed;
@@ -141,8 +141,8 @@ void armStop()
 {
 	if(SensorValue[armSensor] < 1790 && SensorValue[armSensor] > 270)
 	{
-		motor[leftTower] = 8;
-		motor[rightTower] = 8;
+		motor[leftTower] = 15;
+		motor[rightTower] = 15;
 	}
 	else
 	{
@@ -268,7 +268,7 @@ void defenseAuto()
 
 void openClaw()
 {
-	motor[claw] = 75;
+	motor[claw] = 90;
 }
 
 void closeClaw()
@@ -278,7 +278,7 @@ void closeClaw()
 
 void holdClaw()
 {
-	motor[claw] = -40;
+	motor[claw] = -63;
 }
 
 void clawStop()
@@ -301,103 +301,36 @@ task autonomous()
 {
 	int defence = 0;
 	pre_auton();
-	while(SensorValue[leftWheels] < 100 && SensorValue[rightWheels] < 100)
+	while(SensorValue[leftWheels] < 788 && SensorValue[rightWheels] < 788 && SensorValue[clawSensor] < 1070)
 	{
 		forwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[leftWheels] > 99 && SensorValue[rightWheels] > 99)
-	{
-		backwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[leftWheels] > -110 && SensorValue[rightWheels] > -110)
-	{
-		backwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[leftWheels] < -109 && SensorValue[rightWheels] < -109)
-	{
-		forwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[armSensor] > 1490)
-	{
-		armUp();
-	}
-	armStop();
-	while(SensorValue(clawSensor) < 1633)
-	{
 		closeClaw();
 	}
-	motor[claw] = 0;
-	while(SensorValue[armSensor] < 2290)
+	clawStop();
+	while(SensorValue[leftWheels] < 888 && SensorValue[rightWheels] < 888)
 	{
-		armDown();
+		forwardAuto(90);
 	}
-	armStop();
-	while(SensorValue[leftWheels] < 500 && SensorValue[rightWheels] < 500)
+	while(SensorValue[leftWheels] > 587 && SensorValue[rightWheels] > 587)
+	{
+		backwardAuto(90);
+	}
+	while(SensorValue[leftWheels] < 585 && SensorValue[rightWheels] < 585)
 	{
 		forwardAuto(90);
 	}
 	stopMoving();
-	while(SensorValue[leftWheels] > 499 && SensorValue[rightWheels] > 499)
-	{
-		backwardAuto(90);
-	}
-	stopMoving();
-	holdClaw();
-	wait1Msec(600);
-	while(SensorValue(armSensor) > 289)
-	{
-		armUp();
-	}
-	armStop();
-	while(SensorValue(leftWheels) > -50 && SensorValue[rightWheels] > -50)
-	{
-		backwardAuto(90);
-	}
-	while(SensorValue[leftWheels] < -49 && SensorValue[rightWheels] < -49)
-	{
-		forwardAuto(90);
-	}
-	stopMoving();
+	wait1Msec(500);
 	clearEncoders();
 	ccwRotationBothSide(90,40);
 	stopMoving();
 	clearEncoders();
-	cwRotationBothSide(3,80);
+	cwRotationBothSide((5/6),40);
 	stopMoving();
 	clearEncoders();
-	while(SensorValue[leftWheels] < 1375 && SensorValue[rightWheels] < 1375)
-	{
-		forwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[clawSensor] > 1583)
-	{
-		openClaw();
-	}
-	while(SensorValue[clawSensor] < 2200)
-	{
+	while(SensorValue[clawSensor] < 1200)
 		closeClaw();
-	}
 	clawStop();
-	while(SensorValue[leftWheels] > 1000 && SensorValue[rightWheels] > 1000)
-	{
-		backwardAuto(90);
-	}
-	stopMoving();
-	while(SensorValue[leftWheels] < 1375 && SensorValue[rightWheels] < 1375 && SensorValue[clawSensor] > 1150)
-	{
-		openClaw();
-		forwardAuto(90);
-		clearEncoders();
-	}
-	stopMoving();
-	wait1Msec(200);
-	clearEncoders();
-	defenseAuto();
 }
 
 
@@ -491,14 +424,15 @@ task usercontrol()
    			}
    		}
   	//lock
-
+		if(vexRT[Btn8L] == 1)
+			motor[lock] = -120;
+		else if(vexRT[Btn7L] == 1 && vexRT[Btn7U] == 1)
+			motor[lock] = 127;
 		//claw
     if(vexRT[Btn6U] == 1)
    		holdClaw();
    	else if(vexRT[Btn6D] == 1)
    		openClaw();
-   	else if(vexRT[Btn8L] == 1)
-   		closeClaw();
    	else
    		motor[claw] = 0;
 	}
