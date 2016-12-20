@@ -263,6 +263,8 @@ task autonomous()
 
 // Cube autonomous
 
+/*
+
 	pivotUp();
 	forward();
 	wait1Msec(1000);
@@ -271,6 +273,10 @@ task autonomous()
 	wait1Msec(1200);
 	motor[lPivot] = -30;
 	motor[rPivot] = -30;
+
+	// ccw - right side
+	// cc - left side
+
 	ccw();
 	wait1Msec(1450);
 	backward();
@@ -300,14 +306,19 @@ backward();
 wait1Msec(500);
 rest();
 
+*/
 
 // Knock Star Autonomous
+
+/*
 
 forward();
 pivotUp();
 wait1Msec(750);
 rest();
 pivotDown();
+
+*/
 
 
 	/* Strategy
