@@ -93,7 +93,10 @@ task usercontrol()
 		any function to run if it
 		was equal to 0, but it's a
 		good idea to keep it in
-		mind if you did.		-Tony
+		mind if you did. See the
+		sample threshold programs
+		or the 2198x 2016 code for
+		more details. 		-Tony T.
 		*/
 
 			if (LeftX > 0){
