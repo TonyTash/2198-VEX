@@ -76,6 +76,26 @@ task usercontrol()
 		double RightX = vexRT[Ch1] / motorSensitivity;
 
 		if (LeftY != 0){
+
+		/*
+		Ali, this is a slight flaw
+		in your program. Since the
+		joysticks are analog, there
+		is often no way for them to
+		be exactly centered. You
+		should replace this with a
+		threshold value such as 20
+		or 30 as the value of the
+		joystick will almost never
+		be 0. This won't make a
+		difference for this snippet
+		of code, as you don't have
+		any function to run if it
+		was equal to 0, but it's a
+		good idea to keep it in
+		mind if you did.		-Tony
+		*/
+
 			if (LeftX > 0){
 				motor[frontRight] = LeftY;
 				motor[backRight] = LeftY;
