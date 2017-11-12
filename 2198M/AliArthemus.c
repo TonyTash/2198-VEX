@@ -6,6 +6,16 @@
 #pragma config(Motor,  port10,          backRight,     tmotorVex393, openLoop, reversed)
 #pragma platform(VEX)
 
+/*
+ * Ali, this is just a reminder that you
+ * cannot have any code above the pragma
+ * configuration. Even though comments
+ * don't count as code, it's a good
+ * practice to keep all comments and code
+ * underneath the pragma configuration
+ * -Tony
+ */
+
 //Competition Control and Duration Settings
 #pragma competitionControl(Competition)
 #pragma autonomousDuration(15)
@@ -78,26 +88,26 @@ task usercontrol()
 		if (LeftY != 0){
 
 		/*
-		Ali, this is a slight flaw
-		in your program. Since the
-		joysticks are analog, there
-		is often no way for them to
-		be exactly centered. You
-		should replace this with a
-		threshold value such as 20
-		or 30 as the value of the
-		joystick will almost never
-		be 0. This won't make a
-		difference for this snippet
-		of code, as you don't have
-		any function to run if it
-		was equal to 0, but it's a
-		good idea to keep it in
-		mind if you did. See the
-		sample threshold programs
-		or the 2198x 2016 code for
-		more details. 		-Tony T.
-		*/
+		 * Ali, this is a slight flaw
+		 * in your program. Since the
+		 * joysticks are analog, there
+		 * is often no way for them to
+		 * be exactly centered. You
+		 * should replace this with a
+		 * threshold value such as 20
+		 * or 30 as the value of the
+		 * joystick will almost never
+		 * be 0. This won't make a
+		 * difference for this snippet
+		 * of code, as you don't have
+		 * any function to run if it
+		 * was equal to 0, but it's a
+		 * good idea to keep it in
+		 * mind if you did. See the
+		 * sample threshold programs
+		 * or the 2198x 2016 code for
+		 * more details. 		-Tony T.
+		 */
 
 			if (LeftX > 0){
 				motor[frontRight] = LeftY;
