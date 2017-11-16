@@ -71,20 +71,20 @@ task usercontrol()
 
 	while (true)
 	{
-	  
+
     //Right side of the robot is controlled by the right joystick, Y-axis
     motor[frontRightMotor] = vexRT[Ch2];
     motor[backRightMotor]  = vexRT[Ch2];
     //Left side of the robot is controlled by the left joystick, Y-axis
     motor[frontLeftMotor] = vexRT[Ch3];
     motor[backLeftMotor]  = vexRT[Ch3];
-    
-    
+
+
     // Control speeds from variable to make changes easier
     int mobileSpeed = 127;
     int towerSpeed = 127;
     int clawSpeed = 127;
-    
+
 	  //Tower Cone Control
     if(vexRT[Btn6U] == 1)
     {
@@ -101,7 +101,7 @@ task usercontrol()
       motor[towerRightMotor] = 0;
       motor[towerLeftMotor] = 0;
     }
-    
+
     //Mobile Goal Control
     if(vexRT[Btn5U] == 1)
     {
@@ -118,14 +118,14 @@ task usercontrol()
       motor[mobileLeftMotor] = 0;
       motor[mobileRightMotor] = 0;
     }
-    
+
     //Claw Motor Control
     if(vexRT[Btn8L] == 1)
     {
       motor[clawLeftMotor] = clawSpeed;
       motor[clawRightMotor] = clawSpeed;
     }
-    else if(vexRT[Btn8R= 1)
+    else if(vexRT[Btn8R] == 1)
     {
       motor[clawLeftMotor] = (-1)*(clawSpeed);
       motor[clawRightMotor] = (-1)*(clawSpeed);
