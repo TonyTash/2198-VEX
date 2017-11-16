@@ -71,25 +71,64 @@ task usercontrol()
 
 	while (true)
 	{
-	  // This is the main execution loop for the user control program. Each time through the loop
-	  // your program should update motor + servo values based on feedback from the joysticks.
-
-	  // .....................................................................................
-	  // Insert user code here. This is where you use the joystick values to update your motors, etc.
-	  // .....................................................................................
-
+	  
+    //Right side of the robot is controlled by the right joystick, Y-axis
+    motor[frontRightMotor] = vexRT[Ch2];
+    motor[backRightMotor]  = vexRT[Ch2];
+    //Left side of the robot is controlled by the left joystick, Y-axis
+    motor[frontLeftMotor] = vexRT[Ch3];
+    motor[backLeftMotor]  = vexRT[Ch3];
+    
+    
 	  //Arm Control
     if(vexRT[Btn6U] == 1)
     {
-      motor[armMotor] = 127;
+      motor[towerRightMotor] = 127;
+      motor[towerLeftMotor] = 127;
     }
     else if(vexRT[Btn6D] == 1)
     {
-      motor[armMotor] = -127;
+      motor[towerRightMotor] = -127;
+      motor[towerLeftMotor] = -127;
     }
     else
     {
-      motor[armMotor] = 0;
+      motor[towerRightMotor] = 0;
+      motor[towerLeftMotor] = 0;
+    }
+    
+    //Mobile Goal Control
+    if(vexRT[Btn5U] == 1)
+    {
+      motor[mobileLeftMotor] = 127;
+      motor[mobileRightMotor] = 127;
+    }
+    else if(vexRT[Btn5D] == 1)
+    {
+      motor[mobileLeftMotor] = -127;
+      motor[mobileRightMotor] = -127;
+    }
+    else
+    {
+      motor[mobileLeftMotor] = 0;
+      motor[mobileRightMotor] = 0;
+    }
+    
+    //Mobile Goal Control
+    if(vexRT[Btn8L] == 1)
+    {
+      motor[clawLeftMotor] = 127;
+      motor[clawRightMotor] = 127;
+    }
+    else if(vexRT[Btn8R= 1)
+    {
+      motor[clawLeftMotor] = -127;
+      motor[clawRightMotor] = -127;
+    }
+    else
+    {
+      motor[clawLeftMotor] = 0;
+      motor[clawRightMotor] = 0;
     }
 
 	}
