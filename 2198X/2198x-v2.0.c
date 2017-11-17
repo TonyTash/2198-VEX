@@ -2,7 +2,7 @@
 #pragma config(Motor,  port2,           backRightMotor, tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           towerLeftMotor, tmotorVex393, openLoop)
 #pragma config(Motor,  port4,           clawLeftMotor, tmotorVex393, openLoop)
-#pragma config(Motor,  port5,           mobileRighttMotor, tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port5,           mobileRightMotor, tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port6,           mobileLeftMotor, tmotorVex393, openLoop)
 #pragma config(Motor,  port7,           clawRightMotor, tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port8,           towerRightMotor, tmotorVex393, openLoop, reversed)
