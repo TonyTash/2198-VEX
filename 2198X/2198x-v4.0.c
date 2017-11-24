@@ -151,32 +151,43 @@ task autonomous()
 
 
 	pre_auton();
+
+	// Rotate left from starting position
 	while(SensorValue[rightDrive] < 373)
 	{
+		//rotate right motors
 		motor[frontRightMotor] = 90;
 		motor[backRightMotor] = 90;
 
+		//lift tower slightly
 		motor[coneRightMotor] = (-60);
     motor[coneLeftMotor]  = (-60);
 
+    //close cone claw
     motor[coneClawMotor] = 40;
 
 	}
 
+	  //slow down motors to hold arm
 		motor[coneRightMotor] = (-30);
     motor[coneLeftMotor]  = (-30);
 
+
+    // drive forward until mobile goal
 	while(SensorValue[rightDrive] < 2000)
 	{
 		motor[frontLeftMotor] = 110;
 		motor[backLeftMotor] = 110;
 		motor[frontRightMotor] = 96;
 		motor[backRightMotor] = 96;
+
+		// open mobile goal holder
 		motor[mobileClawMotor] = 95;
 	}
 
 	stopMoving();
 
+	//lift mobile goal lift
 		while(SensorValue[rightMobile] > -1400)
 	{
 
@@ -187,6 +198,7 @@ task autonomous()
 
 
 
+	// drive backwards
     	while(SensorValue[rightDrive] > -100)
 	{
 
@@ -196,7 +208,7 @@ task autonomous()
 		motor[backRightMotor] = -85;
 
 
-
+//lift goal even more
 		if (SensorValue[rightMobile] > -2000)
 		{
 		motor[mobileLeftMotor] = -127;
@@ -213,11 +225,12 @@ task autonomous()
 
 
 	}
-
+// grip goal
 		motor[mobileClawMotor] = -60;
 
 	}
 
+	// stop and raise
 		motor[frontLeftMotor] = 0;
 		motor[backLeftMotor] = 0;
 		motor[frontRightMotor] = 0;
@@ -229,6 +242,8 @@ task autonomous()
     motor[mobileLeftMotor] = 0;
     motor[mobileRightMotor] = 0;
 
+
+    // rotate to score
 	while(SensorValue[rightDrive] < 350)
 	{
 		motor[coneRightMotor] = (127);
@@ -240,6 +255,7 @@ task autonomous()
 	}
 
 
+	// forward over bar
 	  while(SensorValue[rightDrive] < 800)
 	{
 
@@ -259,6 +275,7 @@ task autonomous()
 		motor[frontRightMotor] = 0;
 		motor[backRightMotor] = 0;
 
+		// lift to dump goal
 		while(SensorValue[rightMobile] > -2800)
 	{
 
@@ -273,7 +290,8 @@ task autonomous()
   motor[coneLeftMotor] = 0;
   motor[coneRightMotor] = 0;
 
-  while(SensorValue[rightDrive] > 0)
+  // drive backwards
+  while(SensorValue[rightDrive] > 300)
 	{
 
 		motor[frontLeftMotor] = -127;
