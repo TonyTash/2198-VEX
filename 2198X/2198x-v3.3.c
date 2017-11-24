@@ -151,7 +151,7 @@ task autonomous()
 
 
 	pre_auton();
-	while(SensorValue[rightDrive] < 375)
+	while(SensorValue[rightDrive] < 373)
 	{
 		motor[frontRightMotor] = 90;
 		motor[backRightMotor] = 90;
@@ -168,8 +168,8 @@ task autonomous()
 
 	while(SensorValue[rightDrive] < 2000)
 	{
-		motor[frontLeftMotor] = 96;
-		motor[backLeftMotor] = 96;
+		motor[frontLeftMotor] = 110;
+		motor[backLeftMotor] = 110;
 		motor[frontRightMotor] = 96;
 		motor[backRightMotor] = 96;
 		motor[mobileClawMotor] = 95;
@@ -196,50 +196,61 @@ task autonomous()
 		motor[backRightMotor] = -80;
 
 
+
 		if (SensorValue[rightMobile] > -2000)
 		{
 		motor[mobileLeftMotor] = -127;
     motor[mobileRightMotor] = -127;
+
+    motor[coneRightMotor] = (-80);
+    motor[coneLeftMotor]  = (-80);
+
 		}
 
 		else {
 		motor[mobileLeftMotor] = 0;
     motor[mobileRightMotor] = 0;
+
+
 	}
 
 		motor[mobileClawMotor] = -60;
-		motor[coneRightMotor] = (-100);
-    motor[coneLeftMotor]  = (-100);
+
 	}
 
 		motor[frontLeftMotor] = 0;
 		motor[backLeftMotor] = 0;
 		motor[frontRightMotor] = 0;
 		motor[backRightMotor] = 0;
-		motor[coneRightMotor] = (80);
-    motor[coneLeftMotor]  = (80);
+		motor[coneRightMotor] = (127);
+    motor[coneLeftMotor]  = (127);
     motor[coneClawMotor] = -127;
 
     motor[mobileLeftMotor] = 0;
     motor[mobileRightMotor] = 0;
 
-	while(SensorValue[rightDrive] > -800)
+	while(SensorValue[rightDrive] < 400)
 	{
-		motor[frontLeftMotor] = 127;
-		motor[backLeftMotor] = 127;
-		motor[frontRightMotor] = -127;
-		motor[backRightMotor] = -127;
-	}
 		motor[coneRightMotor] = (127);
     motor[coneLeftMotor]  = (127);
+		motor[frontLeftMotor] = -127;
+		motor[backLeftMotor] = -127;
+		motor[frontRightMotor] = 127;
+		motor[backRightMotor] = 127;
+	}
 
-	  while(SensorValue[rightDrive] < 100)
+
+	  while(SensorValue[rightDrive] < 900)
 	{
 
 		motor[frontLeftMotor] = 127;
 		motor[backLeftMotor] = 127;
 		motor[frontRightMotor] = 127;
 		motor[backRightMotor] = 127;
+
+		motor[coneRightMotor] = (127);
+    motor[coneLeftMotor]  = (127);
+
 		motor[mobileClawMotor] = 127;
 	}
 
@@ -248,7 +259,7 @@ task autonomous()
 		motor[frontRightMotor] = 0;
 		motor[backRightMotor] = 0;
 
-		while(SensorValue[rightMobile] > -2750)
+		while(SensorValue[rightMobile] > -2800)
 	{
 
 		motor[mobileLeftMotor] = -127;
@@ -262,9 +273,7 @@ task autonomous()
   motor[coneLeftMotor] = 0;
   motor[coneRightMotor] = 0;
 
-  wait1Msec(100);
-
-  while(SensorValue[rightDrive] > -500)
+  while(SensorValue[rightDrive] > 0)
 	{
 
 		motor[frontLeftMotor] = -127;
