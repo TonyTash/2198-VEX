@@ -50,21 +50,36 @@ task autonomous()
 
 // Sensitivity
 float motorSensitivity = 1.0;
-float armMotorSensitivity = 1.0;
+float armMotorSensitivity = 2;
 float clawMotorSensitivity = 2.1;
-float mobileGoalLiftSense = 1.7;
+float mobileGoalLiftSense = 2;
+int multi = 1;
 
 void arcadeMove(float sensitivity){
 		// Vector Addition and movement
-		motor[leftDrive]  = (vexRT[Ch4] + vexRT[Ch3]) / motorSensitivity;
-		motor[rightDrive] = (vexRT[Ch4] - vexRT[Ch3]) / motorSensitivity;
+		//Right side of the robot is controlled by the right joystick, Y-axis
+  	if (multi == 1){
+		motor[leftDrive] = -vexRT[Ch2];
+    //Left side of the robot is controlled by the left joystick, Y-axis
+    motor[rightDrive] = vexRT[Ch3];
+  }
+
+  else if (multi == -1){
+
+  	motor[rightDrive] = -vexRT[Ch2];
+    //Left side of the robot is controlled by the left joystick, Y-axis
+    motor[leftDrive] = vexRT[Ch3];
+
+	}
+
+
 }
 
 void tankDrive(float sensitivity){
 	//Right side of the robot is controlled by the right joystick, Y-axis
-  motor[leftDrive] = -vexRT[Ch2Xmtr2] / sensitivity;
+  motor[rightDrive] = vexRT[Ch2Xmtr2] / sensitivity;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[rightDrive] = -vexRT[Ch3Xmtr2] / sensitivity;
+  motor[leftDrive] = -vexRT[Ch3Xmtr2] / sensitivity;
 }
 
 void autoMovement(int speed){
@@ -119,7 +134,7 @@ task usercontrol()
 		arcadeMove(motorSensitivity);
 
 		// Arcade Movement - Driver 2
-		tankDrive(motorSensitivity);
+		//tankDrive(motorSensitivity);
 
 		// ARM - Driver 1 EXCLUSIVE
 		// ARM Movement
@@ -156,12 +171,16 @@ task usercontrol()
       motor[rightClaw] = 0;
     }
 
+    if (vexRT[Btn7L] == 1){
+    multi = -(multi);
+    }
+
 		//Controller 2
     // Mobile Goal Lift - Driver 2 100%
-    if (vexRT[Btn8D] == 1){
+    if (vexRT[Btn8U] == 1){
     	mobileGoalLift(127, mobileGoalLiftSense);
     } else
-    if (vexRT[Btn8U] == 1){
+    if (vexRT[Btn8D] == 1){
     	mobileGoalLift(-127, mobileGoalLiftSense);
     } else
 
