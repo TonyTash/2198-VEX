@@ -138,12 +138,12 @@ task usercontrol()
 
 		// ARM - Driver 1 EXCLUSIVE
 		// ARM Movement
-		if(vexRT[Btn5U] == 1)
+		if(vexRT[Btn6U] == 1)
     {
     	// Arm UP Movement
       armMovement(127, armMotorSensitivity);
     }
-    else if(vexRT[Btn5D] == 1)
+    else if(vexRT[Btn6D] == 1)
     {
     	// Arm Down Movement
       armMovement(-127, armMotorSensitivity);
@@ -159,20 +159,30 @@ task usercontrol()
 
     // Claw - Driver 1 EXCLUSIVE
     // Close Claw
-   	if (vexRT[Btn6U] == 1){
+   	if (vexRT[Btn5U] == 1){
    			clawMovement(127 / clawMotorSensitivity, 1);
-   	} else // Open Claw
-   		if (vexRT[Btn6D] == 1){
+   	}
+
+   	else // Open Claw
+   		if (vexRT[Btn5D] == 1){
    			clawMovement(127 / clawMotorSensitivity, 0);
-  	}else
+  	}
+
+  	else
     {
     	// Disengage Claw Motors
       motor[leftClaw] = 0;
       motor[rightClaw] = 0;
     }
 
-    if (vexRT[Btn7L] == 1){
-    multi = -(multi);
+    //Reverse
+    if (vexRT[Btn7U] == 1){
+    multi = 1;
+    }
+
+    //Reverse
+    if (vexRT[Btn7D] == 1){
+    multi = -1;
     }
 
 		//Controller 2
@@ -181,7 +191,7 @@ task usercontrol()
     	mobileGoalLift(127, mobileGoalLiftSense);
     } else
     if (vexRT[Btn8D] == 1){
-    	mobileGoalLift(-127, mobileGoalLiftSense);
+    	mobileGoalLift(-80, mobileGoalLiftSense);
     } else
 
     // Mobile Goal Lift - Driver 2 30%
