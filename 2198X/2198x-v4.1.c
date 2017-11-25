@@ -29,21 +29,21 @@
 
 void forwardAuto(int speed)//distance in positive, remember to set sensor value to zero if needed; speed in positive
 {
-		if(SensorValue[leftDrive] < SensorValue[leftDrive])
+		if(SensorValue[leftDrive] < SensorValue[rightDrive])
 		{
-			motor[frontLeftMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
-			motor[backLeftMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
+			motor[frontLeftMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
+			motor[backLeftMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
 			motor[frontRightMotor] = speed;
 			motor[backRightMotor] = speed;
 		}
-		else if(SensorValue[leftDrive] > SensorValue[leftDrive])
+		else if(SensorValue[leftDrive] > SensorValue[rightDrive])
 		{
 			motor[frontLeftMotor] = speed;
 			motor[backLeftMotor] = speed;
-			motor[frontRightMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
-			motor[backRightMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
+			motor[frontRightMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
+			motor[backRightMotor] = speed - (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
 		}
-		else if(SensorValue[leftDrive] == SensorValue[leftDrive])
+		else if(SensorValue[leftDrive] == SensorValue[rightDrive])
 		{
 			motor[frontLeftMotor] = speed;
 			motor[backLeftMotor] = speed;
@@ -54,21 +54,21 @@ void forwardAuto(int speed)//distance in positive, remember to set sensor value 
 
 void backwardAuto(int speed)//distance in negative, remember to set sensor value to zero if needed; speed in positive
 {
-		if(SensorValue[leftDrive] < SensorValue[leftDrive])
+		if(SensorValue[leftDrive] < SensorValue[rightDrive])
 		{
 			motor[frontLeftMotor] = -speed;
 			motor[backLeftMotor] = -speed;
-			motor[frontRightMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
-			motor[backRightMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
+			motor[frontRightMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
+			motor[backRightMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
 		}
-		else if(SensorValue[leftDrive] > SensorValue[leftDrive])
+		else if(SensorValue[leftDrive] > SensorValue[rightDrive])
 		{
-			motor[frontLeftMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
-			motor[backLeftMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[leftDrive])));
+			motor[frontLeftMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
+			motor[backLeftMotor] = -speed + (abs((SensorValue[leftDrive]) - (SensorValue[rightDrive])));
 			motor[frontRightMotor] = -speed;
 			motor[backRightMotor] = -speed;
 		}
-		else if(SensorValue[leftDrive] == SensorValue[leftDrive])
+		else if(SensorValue[leftDrive] == SensorValue[rightDrive])
 		{
 			motor[frontLeftMotor] = -speed;
 			motor[backLeftMotor] = -speed;
@@ -80,7 +80,7 @@ void backwardAuto(int speed)//distance in negative, remember to set sensor value
 void ccwRotationBothSide(int degree, int speed)//degree in positive, and speed in positive for both side, program will set them to negative
 {
 	int distance = 7.5*degree/2;
-	while(SensorValue[leftDrive] > -distance && SensorValue[leftDrive] < distance)
+	while(SensorValue[leftDrive] > -distance && SensorValue[rightDrive] < distance)
 	{
 		motor[frontLeftMotor] = -speed;
 		motor[backLeftMotor] = -speed;
@@ -92,7 +92,7 @@ void ccwRotationBothSide(int degree, int speed)//degree in positive, and speed i
 void cwRotationBothSide(int degree,int speed)//degree in positive, and speed in positive for both side, program will set them to negative
 {
 	int distance = 7.5*degree/2;
-	while(SensorValue[leftDrive] < distance && SensorValue[leftDrive] > -distance)
+	while(SensorValue[leftDrive] < distance && SensorValue[rightDrive] > -distance)
 	{
 		motor[frontLeftMotor] = speed;
 		motor[backLeftMotor] = speed;
@@ -143,8 +143,8 @@ task autonomous()
   // Insert user code here.
   // .....................................................................................
 
-	SensorValue[leftDrive] = 0;	  // Set the encoder so that it starts counting at 0
-	SensorValue[rightDrive]  = 0;	  // Set the encoder so that it starts counting at 0
+	SensorValue[rightDrive] = 0;	  // Set the encoder so that it starts counting at 0
+	SensorValue[leftDrive]  = 0;	  // Set the encoder so that it starts counting at 0
 
 	SensorValue[rightMobile] = 0;	  // Set the encoder so that it starts counting at 0
 	SensorValue[leftMobile]  = 0;	  // Set the encoder so that it starts counting at 0
@@ -153,11 +153,11 @@ task autonomous()
 	pre_auton();
 
 	// Rotate left from starting position
-	while(SensorValue[leftDrive] > -373)
+	while(SensorValue[rightDrive] < 373)
 	{
 		//rotate right motors
-		motor[frontLeftMotor] = 90;
-		motor[backLeftMotor] = 90;
+		motor[frontRightMotor] = 90;
+		motor[backRightMotor] = 90;
 
 		//lift tower slightly
 		motor[coneRightMotor] = (-60);
@@ -174,12 +174,12 @@ task autonomous()
 
 
     // drive forward until mobile goal
-	while(SensorValue[leftDrive] < 2000)
+	while(SensorValue[rightDrive] < 2000)
 	{
-		motor[frontLeftMotor] = 96;
-		motor[backLeftMotor] = 96;
-		motor[frontRightMotor] = 110;
-		motor[backRightMotor] = 110;
+		motor[frontLeftMotor] = 110;
+		motor[backLeftMotor] = 110;
+		motor[frontRightMotor] = 96;
+		motor[backRightMotor] = 96;
 
 		// open mobile goal holder
 		motor[mobileClawMotor] = 95;
@@ -199,13 +199,13 @@ task autonomous()
 
 
 	// drive backwards
-    	while(SensorValue[leftDrive] > -100)
+    	while(SensorValue[rightDrive] > -100)
 	{
 
-		motor[frontLeftMotor] = -85;
-		motor[backLeftMotor] = -85;
-		motor[frontRightMotor] = -120;
-		motor[backRightMotor] = -120;
+		motor[frontLeftMotor] = -120;
+		motor[backLeftMotor] = -120;
+		motor[frontRightMotor] = -85;
+		motor[backRightMotor] = -85;
 
 
 //lift goal even more
@@ -244,19 +244,19 @@ task autonomous()
 
 
     // rotate to score
-	while(SensorValue[leftDrive] < 350)
+	while(SensorValue[rightDrive] < 350)
 	{
 		motor[coneRightMotor] = (127);
     motor[coneLeftMotor]  = (127);
-		motor[frontLeftMotor] = 127;
-		motor[backLeftMotor] = 127;
-		motor[frontRightMotor] = -127;
-		motor[backRightMotor] = -127;
+		motor[frontLeftMotor] = -127;
+		motor[backLeftMotor] = -127;
+		motor[frontRightMotor] = 127;
+		motor[backRightMotor] = 127;
 	}
 
 
 	// forward over bar
-	  while(SensorValue[leftDrive] < 800)
+	  while(SensorValue[rightDrive] < 800)
 	{
 
 		motor[frontLeftMotor] = 127;
@@ -291,7 +291,7 @@ task autonomous()
   motor[coneRightMotor] = 0;
 
   // drive backwards
-  while(SensorValue[leftDrive] > 0)
+  while(SensorValue[rightDrive] > 300)
 	{
 
 		motor[frontLeftMotor] = -127;
@@ -319,8 +319,8 @@ task usercontrol()
 {
 	// User control code here, inside the loop
 
-	SensorValue[leftDrive] = 0;	  // Set the encoder so that it starts counting at 0
-	SensorValue[rightDrive]  = 0;	  // Set the encoder so that it starts counting at 0
+	SensorValue[rightDrive] = 0;	  // Set the encoder so that it starts counting at 0
+	SensorValue[leftDrive]  = 0;	  // Set the encoder so that it starts counting at 0
 
 	SensorValue[rightMobile] = 0;	  // Set the encoder so that it starts counting at 0
 	SensorValue[leftMobile]  = 0;	  // Set the encoder so that it starts counting at 0
