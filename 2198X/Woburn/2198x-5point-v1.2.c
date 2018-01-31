@@ -153,37 +153,40 @@ task autonomous()
 	pre_auton();
 
 	// Rotate left from starting position
-	while(SensorValue[rightDrive] < 360)
-	{
-		//rotate right motors
-		motor[frontRightMotor] = 90;
-		motor[backRightMotor] = 90;
+	//while(SensorValue[rightDrive] < 345)
+	//{
+	//	//rotate right motors
+	//	motor[frontRightMotor] = 90;
+	//	motor[backRightMotor] = 90;
 
-		//lift tower slightly
-		motor[coneRightMotor] = (-60);
-    motor[coneLeftMotor]  = (-60);
+	//	//lift tower slightly
+	//	motor[coneRightMotor] = (-60);
+ //   motor[coneLeftMotor]  = (-60);
 
-    //close cone claw
-    motor[coneClawMotor] = 40;
+ //   //close cone claw
+ //   motor[coneClawMotor] = 40;
 
-	}
+	//}
 
 	  //slow down motors to hold arm
-		motor[coneRightMotor] = (-30);
-    motor[coneLeftMotor]  = (-30);
+		motor[coneRightMotor] = (-60);
+    motor[coneLeftMotor]  = (-60);
+    wait1Msec(250);
 
 
     // drive forward until mobile goal
-	while(SensorValue[rightDrive] < 2000)
+	while(SensorValue[rightDrive] < 1750)
 	{
-		motor[frontLeftMotor] = 127;
-		motor[backLeftMotor] = 127;
-		motor[frontRightMotor] = 102;
-		motor[backRightMotor] = 102;
+		motor[frontLeftMotor] = 110;
+		motor[backLeftMotor] = 110;
+		motor[frontRightMotor] = 95;
+		motor[backRightMotor] = 95;
 
 		// open mobile goal holder
 		motor[mobileClawMotor] = 95;
 	}
+	motor[coneRightMotor] = (-30);
+  motor[coneLeftMotor]  = (-30);
 
 	stopMoving();
 
@@ -199,13 +202,13 @@ task autonomous()
 
 
 	// drive backwards
-    	while(SensorValue[rightDrive] > -100)
+    	while(SensorValue[rightDrive] > 300)
 	{
 
-		motor[frontLeftMotor] = -120;
-		motor[backLeftMotor] = -120;
-		motor[frontRightMotor] = -85;
-		motor[backRightMotor] = -85;
+		motor[frontLeftMotor] = -105;
+		motor[backLeftMotor] = -105;
+		motor[frontRightMotor] = -110;
+		motor[backRightMotor] = -110;
 
 
 //lift goal even more
@@ -244,7 +247,7 @@ task autonomous()
 
 
     // rotate to score
-	while(SensorValue[rightDrive] < 350)
+	while(SensorValue[rightDrive] < 980)
 	{
 		motor[coneRightMotor] = (127);
     motor[coneLeftMotor]  = (127);
@@ -256,7 +259,7 @@ task autonomous()
 
 
 	// forward over bar
-	  while(SensorValue[rightDrive] < 800)
+	  while(SensorValue[rightDrive] < 1400)
 	{
 
 		motor[frontLeftMotor] = 127;
@@ -276,7 +279,7 @@ task autonomous()
 		motor[backRightMotor] = 0;
 
 		// lift to dump goal
-		while(SensorValue[rightMobile] > -2800)
+		while(SensorValue[rightMobile] > -2880)
 	{
 
 		motor[mobileLeftMotor] = -127;
@@ -291,7 +294,7 @@ task autonomous()
   motor[coneRightMotor] = 0;
 
   // drive backwards
-  while(SensorValue[rightDrive] > 300)
+  while(SensorValue[rightDrive] > 600)
 	{
 
 		motor[frontLeftMotor] = -127;
@@ -300,6 +303,11 @@ task autonomous()
 		motor[backRightMotor] = -127;
 		motor[mobileClawMotor] = 127;
 	}
+
+		motor[frontLeftMotor] = 0;
+		motor[backLeftMotor] = 0;
+		motor[frontRightMotor] = 0;
+		motor[backRightMotor] = 0;
 
 	motor[mobileLeftMotor] = 0;
   motor[mobileRightMotor] = 0;
@@ -492,7 +500,7 @@ task usercontrol()
     {
       motor[mobileClawMotor] = clawSpeed;
     }
-    else if(vexRT[Btn8L] == 1)
+    else if((vexRT[Btn8L] == 1) || (vexRT[Btn7U] == 1))
     {
       motor[mobileClawMotor] = (-1)*(clawSpeed);
     }
