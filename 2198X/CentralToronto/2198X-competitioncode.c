@@ -144,7 +144,7 @@ task autonomous()
 
 		// raise mobile goal
 		while(SensorValue[rightMobile] < 1400) {
-				mobileGoal(110);
+				mobileGoal(100);
 		}
 
 		mobileGoal(0);
