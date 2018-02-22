@@ -34,6 +34,8 @@ void drive(int speed) {
 	motor[frontRight]=speed;
 	motor[backLeft]=speed;
 	motor[backRight]=speed;
+	motor[middleLeft]=speed;
+	motor[middleRight]=speed;
 }
 
 void wheels(int left, int right) {
@@ -41,6 +43,8 @@ void wheels(int left, int right) {
 	motor[frontRight]=right;
 	motor[backLeft]=left;
 	motor[backRight]=right;
+	motor[middleLeft]=left;
+	motor[middleRight]=right;
 }
 
 void arms(int speed) {
@@ -76,7 +80,7 @@ task autonomous()
 {
 	clearEncoder();
 
-	while(SensorValue[rightDrive] < 400)
+	while(SensorValue[rightDrive] < 350)
     {
         drive(40);
 				arms(-127);
@@ -86,7 +90,7 @@ task autonomous()
 
 		clearEncoder();
 
-	while(SensorValue[rightDrive] < 600)
+	while(SensorValue[rightDrive] < 800)
     {
         drive(40);
 		}
@@ -101,7 +105,7 @@ task autonomous()
 
 	while(SensorValue[rightDrive] > -1700)
     {
-        wheels(-40, -70);
+        wheels(-60, -100);
 		}
 
     drive(0);
@@ -111,7 +115,7 @@ task autonomous()
 
 	while(SensorValue[rightDrive] > -400)
     {
-        wheels(40, -40);
+        wheels(80, -80);
 		}
 
   drive(0);
@@ -149,9 +153,16 @@ task autonomous()
 
    clearEncoder();
 
-	while(SensorValue[rightDrive] > -800)
+	while(SensorValue[rightDrive] > -270)
     {
         drive(-63);
+		}
+
+		 clearEncoder();
+
+	while(SensorValue[rightDrive] > 800)
+    {
+        wheels(-80, 80);
 		}
 
   drive(0);
