@@ -144,7 +144,7 @@ task autonomous()
 
 		// raise mobile goal
 		while(SensorValue[rightMobile] < 1400) {
-				mobileGoal(110);
+				mobileGoal(100);
 		}
 
 		mobileGoal(0);
@@ -190,7 +190,7 @@ task autonomous()
     clearEncoder();
 
     // drive backward and lower cone tower
-    while(SensorValue[rightDrive] > -400)
+    while(SensorValue[rightDrive] > -200)
     {
         drive(-90);
 				coneTower(-127);
@@ -204,7 +204,7 @@ task autonomous()
     coneTower(0);
 
     // rotate (change +/- for direction) to drop off goal
-    while(SensorValue[rightDrive] > -880)
+    while(SensorValue[rightDrive] > -600)
     {
         rotate(90);
 
