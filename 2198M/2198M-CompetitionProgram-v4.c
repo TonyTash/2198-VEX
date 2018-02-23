@@ -78,14 +78,14 @@ task autonomous()
 	while(SensorValue[rightDrive] < 400)
     {
         drive(40);
-				arms(-127);
+				arms(-110);
     }
 
 		arms(0);
 
 		clearEncoder();
 
-	while(SensorValue[rightDrive] < 600)
+	while(SensorValue[rightDrive] < 800)
     {
         drive(40);
 		}
@@ -100,7 +100,7 @@ task autonomous()
 
 	while(SensorValue[rightDrive] > -1700)
     {
-        wheels(-40, -70);
+        wheels(-40, -80);
 		}
 
     drive(0);
@@ -108,7 +108,7 @@ task autonomous()
 
     clearEncoder();
 
-	while(SensorValue[rightDrive] > -400)
+	while(SensorValue[rightDrive] > -450)
     {
         wheels(40, -40);
 		}
@@ -126,9 +126,9 @@ task autonomous()
 
   clearEncoder();
 
-	while(SensorValue[rightDrive] < 300)
+	while(SensorValue[rightDrive] < 400)
     {
-        drive(63);
+        drive(73);
         arms(-90);
 		}
 
@@ -140,7 +140,7 @@ task autonomous()
 	while(SensorValue[rightDrive] > -400)
     {
         drive(-63);
-        arms(90);
+        arms(100);
 		}
 
   drive(0);
@@ -148,7 +148,7 @@ task autonomous()
 
    clearEncoder();
 
-	while(SensorValue[rightDrive] > -800)
+	while(SensorValue[rightDrive] > -300)
     {
         drive(-63);
 		}
